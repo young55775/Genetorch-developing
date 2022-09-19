@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from genetorch import reader
 from collections import Counter
 
+
 def search(df, col, kw):
     return df[col] == kw
 
@@ -450,3 +451,15 @@ def plotpro(a, size=800, c='Reds', title='variation_number', sub_c='RdPu', origi
     plt.yticks(fontsize=12)
     plt.title(title, fontsize=12)
     plt.show()
+
+
+def subtract_bg(readfile, bg_file_path):
+    taglist = readfile.taglist
+    bg = reader.read_vcf(bg_file_path)
+    simp_bg = reader.simp_file(bg)
+    for i in range(len(taglist)):
+        big = pd.concat([taglist[i], bg])
+        big.groupby(['gene', 'protein']).filter(lambda x: len(x) == 1)
+        taglist[i] = big
+    readfile.taglist = taglist
+

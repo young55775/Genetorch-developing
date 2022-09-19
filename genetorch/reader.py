@@ -8,6 +8,28 @@ def search(df, col, kw):
     return df[col] == kw
 
 
+def read_vcf(path_a):
+    with open(path_a, 'r') as f:
+        lines = [l for l in f if not l.startswith('##')]
+    return pd.read_csv(
+        io.StringIO(''.join(lines)),
+        dtype={'#CHROM': str, 'POS': int, 'ID': str, 'REF': str, 'ALT': str,
+               'QUAL': str, 'FILTER': str, 'INFO': str},
+        sep='\t'
+    ).rename(columns={'#CHROM': 'CHROM'})
+
+
+def simp_file(raw_df):
+    b = []
+    for i, row in raw_df.iterrows():
+        b.append(row['INFO'].split('|'))
+    c = []
+    for i in range(len(b)):
+        c.append([b[i][3], b[i][4], b[i][1], b[i][9], b[i][10]])
+    genelist = pd.DataFrame(c, columns=['gene', 'ID', 'type', 'base', 'protein'])
+    return genelist
+
+
 class readfile:
     def __init__(self, path=None):
         self.path = path
@@ -20,23 +42,13 @@ class readfile:
         for i in self.names:
             self.candidate[i] = []
 
-
     def readfile(self):
-        if self.path != None:
+        if self.path is not None:
             files = os.listdir(self.path)
             filelist = []
             filename = []
 
             # read vcf from file using pandas dataframe
-            def read_vcf(path_a):
-                with open(path_a, 'r') as f:
-                    lines = [l for l in f if not l.startswith('##')]
-                return pd.read_csv(
-                    io.StringIO(''.join(lines)),
-                    dtype={'#CHROM': str, 'POS': int, 'ID': str, 'REF': str, 'ALT': str,
-                           'QUAL': str, 'FILTER': str, 'INFO': str},
-                    sep='\t'
-                ).rename(columns={'#CHROM': 'CHROM'})
 
             for file in files:
                 if not os.path.isdir(file):
@@ -45,16 +57,6 @@ class readfile:
                         filelist.append(f)
                         filename.append(os.path.basename(file).split('.')[0])
             self.names = filename
-
-            def simp_file(raw_df):
-                b = []
-                for i, row in raw_df.iterrows():
-                    b.append(row['INFO'].split('|'))
-                c = []
-                for i in range(len(b)):
-                    c.append([b[i][3], b[i][4], b[i][1], b[i][9], b[i][10]])
-                genelist = pd.DataFrame(c, columns=['gene', 'ID', 'type', 'base', 'protein'])
-                return genelist
 
             simp_list = []
             for i in range(len(filelist)):
@@ -100,15 +102,6 @@ class getfile:
         filename = []
 
         # read vcf from file using pandas dataframe
-        def read_vcf(path_a):
-            with open(path_a, 'r') as f:
-                lines = [l for l in f if not l.startswith('##')]
-            return pd.read_csv(
-                io.StringIO(''.join(lines)),
-                dtype={'#CHROM': str, 'POS': int, 'ID': str, 'REF': str, 'ALT': str,
-                       'QUAL': str, 'FILTER': str, 'INFO': str},
-                sep='\t'
-            ).rename(columns={'#CHROM': 'CHROM'})
 
         for file in files3:
             if not os.path.isdir(file):
@@ -117,15 +110,6 @@ class getfile:
                 filename.append(os.path.basename(file).split('.')[0])
 
         # read info
-        def simp_file(raw_df):
-            b = []
-            for i, row in raw_df.iterrows():
-                b.append(row['INFO'].split('|'))
-            c = []
-            for i in range(len(b)):
-                c.append([b[i][3], b[i][4], b[i][1], b[i][9], b[i][10]])
-            genelist = pd.DataFrame(c, columns=['gene', 'ID', 'type', 'base', 'protein'])
-            return genelist
 
         simp_list = []
         for i in range(len(filelist)):
