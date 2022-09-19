@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import numpy as np
 
-
+# this is a github test
 def is_syn(description):
     if description[2:5] == description[-3:]:
         return 0
