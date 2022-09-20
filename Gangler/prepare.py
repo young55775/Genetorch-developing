@@ -132,7 +132,7 @@ def subtract_gene(data, gene):
     return list(lst)
 
 
-class SnPool:
+class GradPool:
     def __init__(self, poolist, namelist):
         self.data = [n.impact_dict for n in poolist]
         self.names = namelist
