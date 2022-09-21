@@ -89,14 +89,14 @@ def get_model_mat(model):
 import matplotlib.style as mplstyle
 
 
-def td_plot(model_path, result, gene, dist=25):
+def td_plot(model_path, readfile, gene, dist=25):
     mplstyle.use('fast')
     color = ['orange', 'crimson', 'violet', 'navy', 'y', 'indigo', 'green', 'maroon', 'goldenrod', 'forestgreen',
              'darkslategray', 'darkorange']
     model = pdb_model(model_path)
     min_num = int(model['num'].to_list()[0])
     max_num = int(model['num'].to_list()[-1])
-    num_lst = get_num(result, gene)
+    num_lst = get_num(readfile.result, gene)
     num_lst = [str(n) for n in num_lst if max_num > n > min_num]
     aa = aa_list(model, num_lst)
     matrix = mat(aa)
