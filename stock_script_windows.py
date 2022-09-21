@@ -46,7 +46,7 @@ class stockfile:
             file_si = simp_file(file_s)
             ind = file_s.drop(['INFO', 'FILTER', 'ID', 'REF', 'ALT', 'QUAL', 'FORMAT', 'unknown'], axis=1)
             co = pd.concat([ind, file_si], axis=1, join='outer')
-            co.to_csv(self.outpath + '\\' + i.split('.')[0] + '.csv')
+            co.to_csv(self.outpath + '\\' + i.split('.')[0] + '.csv',index = False)
 
 
 if __name__ == "__main__":
