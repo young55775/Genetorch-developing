@@ -122,11 +122,11 @@ def td_plot(model_path, result, gene, dist=25):
 
 
 # Try to use plotly to generate html form
-def html_plot(model_path, result, gene, dist=25):
+def html_plot(model_path, readfile, gene, dist=25):
     model = pdb_model(model_path)
     min_num = int(model['num'].to_list()[0])
     max_num = int(model['num'].to_list()[-1])
-    num_lst = get_num(result, gene)
+    num_lst = get_num(readfile.result, gene)
     num_lst = [str(n) for n in num_lst if max_num > n > min_num]
     aa = aa_list(model, num_lst)
     matrix = mat(aa)
@@ -146,5 +146,6 @@ def html_plot(model_path, result, gene, dist=25):
     fig = go.Figure(dict(data=[protein, mutation],
                          layout=dict(plot_bgcolor='rgba(233,233,233,1)', paper_bgcolor='rgb(233,233,233)',
                                      title='mutation of {}'.format(gene))))
-    with open('{}.html'.format(gene), 'w') as f:
+    with open(readfile.path +'\\' + '{}.html'.format(gene), 'w') as f:
         f.write(fig.to_html())
+    print("{}.html is in {}".format(gene,readfile.path))
