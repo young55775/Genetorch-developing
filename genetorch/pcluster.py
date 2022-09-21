@@ -2,7 +2,10 @@ import pandas as pd
 import scipy.cluster.hierarchy as hct
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
-
+from plotly.offline import init_notebook_mode, iplot
+import plotly.graph_objs as go
+import matplotlib.pyplot as plt
+import genetorch.pcluster as pc
 
 class AminoAcid:
     def __init__(self, pro, num):
@@ -98,7 +101,7 @@ def td_plot(model_path, result, gene, dist=25):
     aa = aa_list(model, num_lst)
     matrix = mat(aa)
     link = hct.linkage(matrix, method='complete', metric='euclidean')
-    group = hct.fcluster(link, t=25, criterion='distance')
+    group = hct.fcluster(link, t=dist, criterion='distance')
     group = list(group)
     fig = plt.figure()
     ax = plt.axes(projection='3d')
@@ -118,10 +121,8 @@ def td_plot(model_path, result, gene, dist=25):
     plt.show()
 
 
-
+# Try to use plotly to generate html form
 def html_plot(model_path, result, gene, dist=25):
-    color = ['orange', 'crimson', 'violet', 'pink', 'y', 'indigo', 'green', 'maroon', 'goldenrod', 'forestgreen',
-             'darkslategray', 'darkorange']
     model = pdb_model(model_path)
     min_num = int(model['num'].to_list()[0])
     max_num = int(model['num'].to_list()[-1])
@@ -132,23 +133,18 @@ def html_plot(model_path, result, gene, dist=25):
     link = hct.linkage(matrix, method='complete', metric='euclidean')
     group = hct.fcluster(link, t=25, criterion='distance')
     group = list(group)
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
-    x = matrix['x'].to_list()
-    y = matrix['y'].to_list()
-    z = matrix['z'].to_list()
-    names = [n.name + str(n.num) for n in aa]
-    # for i in range(len(group)):
-    #     ax.scatter3D(x[i], y[i], z[i], c=color[group[i]], alpha=1)
-    #     ax.text(x[i] + 0.4, y[i] + 0.4, z[i] + 0, names[i], c='k', fontsize=7)
     full_mat = get_model_mat(model)
-    xa = full_mat['x'].to_list()
-    ya = full_mat['y'].to_list()
-    za = full_mat['z'].to_list()
-    data = []
-    for i in range(len(xa)):
-        data.append([xa[i], ya[i], za[i]])
-    c = Line3D()
-    c.add(series_name=gene, data=data)
-    c.set_global_opts(Visualmap_opts = opts.VisualMapOpts(range_color='gray'))
-    c.render('cluster of' + gene)
+    protein = go.Scatter3d(x=full_mat.x, y=full_mat.y, z=full_mat.z, mode='lines',
+                           marker=dict(color='rgba(128,128,128, 0.4)'), text=full_mat.index)
+    matrix.insert(loc=matrix.shape[1], column='group', value=group)
+    mutation = go.Scatter3d(x=matrix.x, y=matrix.y, z=matrix.z, name='mutation', mode='markers', marker=dict(
+        size=5,
+        color=matrix.group,
+        colorscale='Turbo',
+        opacity=0.8
+    ), text=matrix.index, textposition="top center")
+    fig = go.Figure(dict(data=[protein, mutation],
+                         layout=dict(plot_bgcolor='rgba(233,233,233,1)', paper_bgcolor='rgb(233,233,233)',
+                                     title='mutation of {}'.format(gene))))
+    with open('{}.html'.format(gene), 'w') as f:
+        f.write(fig.to_html())
