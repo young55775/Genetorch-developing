@@ -62,7 +62,7 @@ def pdb_model(model_path):
 
 
 def aa_list(model, num_lst):
-    return [AminoAcid(model, n) for n in num_lst]
+    return [AminoAcid(model, n) for n in num_lst if n in model['num'].to_list()]
 
 
 def cluster(model_path, result, gene):
