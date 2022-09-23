@@ -1,0 +1,6 @@
+pandas
+matplotlib
+requests
+numpy
+scipy
+intermine
