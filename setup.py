@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='genetorch',  # 包名
-      version='1.3.1',  # 版本号
+      version='1.3.2',  # 版本号
       description='To deal with large amount of WGS data in suppressor screening and to predict suppressor gene',
       long_description=long_description,
       long_description_content_type="text/markdown",
@@ -15,5 +15,6 @@ setup(name='genetorch',  # 包名
       license='MIT License',
       packages=find_packages(),
       platforms=["all"],
-      classifiers=['Programming Language :: Python :: 3', 'Development Status :: 4 - Beta', ]
+      classifiers=['Programming Language :: Python :: 3', 'Development Status :: 4 - Beta', ],
+      include_package_data=True
       )
