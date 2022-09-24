@@ -5,13 +5,13 @@ with open("README.md", "r", encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='genetorch',  # 包名
-      version='1.3.3',  # 版本号
+      version='1.3.6',  # 版本号
       description='To deal with large amount of WGS data in suppressor screening and to predict suppressor gene',
       long_description=long_description,
       long_description_content_type="text/markdown",
       author='Guo_Zhengyang',
       author_email='guozhengyang980525@yahoo.co.jp',
-      install_requires=['pandas', 'matplotlib', 'requests', 'numpy', 'scipy', 'intermine'],
+      install_requires=['pandas', 'matplotlib', 'requests', 'numpy', 'scipy', 'intermine','plotly'],
       license='MIT License',
       packages=find_packages(),
       platforms=["all"],

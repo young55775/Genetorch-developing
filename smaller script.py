@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-os.mkdir('apf')
+os.mkdir('genetorch/apf')
 file = os.listdir('genetorch\\protein')
 
 for i in file:
