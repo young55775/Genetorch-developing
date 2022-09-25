@@ -143,7 +143,7 @@ def td_plot(model_path, readfile, gene, dist=25):
         names = [n.name + str(n.num) for n in aa]
         full_mat = get_model_mat(model)
     elif model_path[-3:] == "apf":
-        names = aa
+        names = model.aa
         full_mat = model
     for i in range(len(group)):
         ax.scatter3D(x[i], y[i], z[i], c=color[group[i]], alpha=1)
@@ -166,7 +166,7 @@ def html_plot(model_path, readfile, gene, dist=25):
         txt = full_mat.index
     elif model_path[-3:] == "apf":
         full_mat = model
-        txt = full_mat.aa
+        txt = matrix.index
     protein = go.Scatter3d(x=full_mat.x, y=full_mat.y, z=full_mat.z, mode='lines',
                            marker=dict(color='rgba(128,128,128, 0.4)'), text=txt)
     matrix.insert(loc=matrix.shape[1], column='group', value=group)

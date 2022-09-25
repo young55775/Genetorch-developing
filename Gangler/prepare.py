@@ -111,16 +111,16 @@ def accum(num_lst):
     return res ** (1 / len(num_lst))
 
 
-def m_val(num_lst):
-    max_num = max(num_lst)
-    min_num = min(num_lst)
-    m = accum(num_lst) / (max_num * (max_num - min_num))
-    for i in range(len(num_lst)):
-        if num_lst[i] == max_num:
-            num_lst[i] = m
-        else:
-            num_lst[i] = '-'
-    return num_lst
+# def m_val(num_lst):
+#     max_num = max(num_lst)
+#     min_num = min(num_lst)
+#     m = accum(num_lst) / (max_num * (max_num - min_num))
+#     for i in range(len(num_lst)):
+#         if num_lst[i] == max_num:
+#             num_lst[i] = m
+#         else:
+#             num_lst[i] = '-'
+#     return num_lst
 
 
 def subtract_gene(data, gene):
@@ -152,4 +152,4 @@ class GradPool:
             a = subtract_gene(self.data, i)
             b = impact_rate(a)
             self.impact_rate[i] = b
-            self.m_pool[i] = m_val(b)
+            self.m_pool[i] = 0

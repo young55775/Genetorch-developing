@@ -463,9 +463,3 @@ def subtract_bg(readfile, bg_file_path):
         big = pd.concat([taglist[i], simp_bg])
         taglist[i] = big.groupby(['gene', 'protein']).filter(lambda x: len(x) == 1)
     readfile.taglist = taglist
-
-# if __name__ == "__main__":
-#     gou = reader.readfile(r"C:\Users\YOUNG\Desktop\g\GOU")
-#     subtract_bg(gou,r"C:\Users\YOUNG\Desktop\g\GOU4958.vcf")
-#     find(gou)
-#     print(gou.result)
