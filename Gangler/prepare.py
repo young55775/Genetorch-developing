@@ -3,8 +3,11 @@ import os
 import pandas as pd
 import numpy as np
 
-# this is a github test
+
 def is_syn(description):
+    """
+    to judge a description is synonymous variation or not
+    """
     if description[2:5] == description[-3:]:
         return 0
     elif '.' in description:
@@ -15,6 +18,11 @@ def is_syn(description):
 
 
 def co_data(taglist):
+    """
+
+    :param taglist:
+    :return: co-data
+    """
     co = pd.DataFrame()
     for i in taglist:
         co = pd.concat([co, i])
@@ -22,6 +30,9 @@ def co_data(taglist):
 
 
 def fill_co(co):
+    """
+    fill the protein column with other variation types.
+    """
     for i in range(co.shape[0]):
         if 'intron' in co.iloc[i, 2] and co.iloc[i, 4] == '':
             co.iloc[i, 4] = 'intron_variation'
@@ -35,12 +46,17 @@ def fill_co(co):
             co.iloc[i, 4] = 'delete'
 
 
-
 def fit(co, threshold):
+    """
+    same as filter
+    """
     return co.groupby(['gene', 'base']).filter(lambda x: len(x) <= threshold)
 
 
 def get_dict(co):
+    """
+    taglist -> co_data -> fill_co -> fit -> get_dict
+    """
     grouped_m = co.groupby('gene')
     dic = {}
     for n, g in grouped_m:
@@ -54,6 +70,9 @@ def get_dict(co):
 
 
 def get_impact(taglist, threshold=5):
+    """
+    summary of all above
+    """
     co = co_data(taglist)
     fill_co(co)
     f = fit(co, threshold)
@@ -111,18 +130,6 @@ def accum(num_lst):
     return res ** (1 / len(num_lst))
 
 
-# def m_val(num_lst):
-#     max_num = max(num_lst)
-#     min_num = min(num_lst)
-#     m = accum(num_lst) / (max_num * (max_num - min_num))
-#     for i in range(len(num_lst)):
-#         if num_lst[i] == max_num:
-#             num_lst[i] = m
-#         else:
-#             num_lst[i] = '-'
-#     return num_lst
-
-
 def subtract_gene(data, gene):
     lst = []
     for i in data:
@@ -131,25 +138,3 @@ def subtract_gene(data, gene):
     lst = lst.T
     return list(lst)
 
-
-class GradPool:
-    def __init__(self, poolist, namelist):
-        self.data = [n.impact_dict for n in poolist]
-        self.names = namelist
-        self.pool = pd.DataFrame()
-        self.impact_rate = {}
-        self.m_pool = {}
-        self.run()
-
-    def run(self):
-        genelist = to_genelist(self.data)
-        fill_dic(genelist, self.data)
-        for i in self.data:
-            norm(i)  # normalization
-            # syn can be seen as casual mutation
-            # impact rate = missense+stop+splice+start / casual(intron,synonymous,up or downstream)+impact
-        for i in genelist:
-            a = subtract_gene(self.data, i)
-            b = impact_rate(a)
-            self.impact_rate[i] = b
-            self.m_pool[i] = 0
