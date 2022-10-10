@@ -125,3 +125,4 @@ def orf(string):
             else:
                 protein[codon] += 1
     return protein
+
