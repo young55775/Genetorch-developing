@@ -4,7 +4,7 @@ with open('WBcel235_rna.fna', 'r') as f:
     g = f.readlines()
     for i in g:
         if i[0] == '>':
-            name = i.split('(')[1].split(')')[0]
+            name = i.split('>')[1].split(' ')[0]
             transcript[name] = ''
         else:
             transcript[name] += i.split('\n')[0]
