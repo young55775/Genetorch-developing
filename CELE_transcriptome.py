@@ -177,3 +177,24 @@ def plot_dict(dict):
     plt.show()
 
 plot_dict(mut_dict)
+
+def slide(seq):
+    record = []
+    for i in range(len(seq)-2):
+        record.append(''.join([seq[i],seq[i+1],seq[i+2]]))
+    return record
+
+record = ''
+with open(r'D:\annotation\Genetorch-developing\WBcel235_rna .fna','r') as f:
+    file = f.readlines()
+    for i in file:
+        if i[0] == '>':
+            record += '\n'
+        else:
+            record += i.split('\n')[0]
+
+record = record.split('\n')
+del record[0]
+code = []
+for i in record:
+    code.extend(slide(i))
