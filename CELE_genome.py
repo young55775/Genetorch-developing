@@ -4,6 +4,7 @@ import os
 import matplotlib
 import matplotlib.pyplot as plt
 import genetorch as gt
+import numpy as np
 
 matplotlib.use('TkAgg')
 
@@ -172,7 +173,7 @@ def match(genome, comb):
     record = {}
     for i in list(genome.values()):
         for seq in comb:
-            for m in range(len(i)-3):
+            for m in range(len(i) - 3):
                 if i[m] == seq[0]:
                     if i[m + 1] == seq[1] and i[m + 2] == seq[2]:
                         if seq not in record.keys():
@@ -180,3 +181,67 @@ def match(genome, comb):
                         else:
                             record[seq] += 1
     return record
+
+
+# I:15072434    II:15279421 III:13783801    IV:17493829 V:20924180  X:17718942  Mt:13794
+def region_freq(co_data, n):
+    record_dict = {}
+    chrom = co_data['chrom'].to_list()
+    pos = co_data['pos'].to_list()
+    group = list(zip(chrom, pos))
+    error = []
+    for i in group:
+        if i[0] != 'MtDNA':
+            if i[0] not in record_dict.keys():
+                record_dict[i[0]] = [0] * 210
+            else:
+                try:
+                    ind = int(i[1]) // 100000
+                    record_dict[i[0]][ind] += 1 / n
+                except:
+                    error.append(i)
+    print(len(error))
+    return record_dict
+
+
+def heat_map_dict(dict):
+    data = np.asarray(list(dict.values()))
+    plt.imshow(data, cmap='Reds', interpolation='nearest')
+    plt.show()
+
+
+def gene_filter(a, lengthlimit=0.6):
+    conc = pd.DataFrame()
+    for i in range(len(a.taglist)):
+        conc = pd.concat([conc, a.taglist[i]])
+    filt = conc.groupby(['gene', 'protein', 'ID', 'base']).filter(lambda x: len(x) <= lengthlimit)
+    return filt
+
+
+def get_heatmap(path):
+    f = readfile(path)
+    co = gene_filter(f, 8)
+    n = co.shape[0]
+    heatmap = region_freq(co, n)
+    heat_map_dict(heatmap)
+    return heatmap
+
+
+def chrom_plot(heatmap, legend, key):
+    for i in range(len(heatmap)):
+        plt.plot(list(range(210)), heatmap[i][key], linestyle='-', label=legend[i])
+    plt.legend(loc='upper right')
+    plt.show()
+
+
+def variation(heatmap):
+    d = []
+    chro = ['I', 'II', 'III', 'IV', 'V', 'X']
+    for key in chro:
+        for i in heatmap:
+            d.append(i[key])
+        std = np.std(d, axis=0)
+        plt.plot(list(range(210)), std, linestyle='-', label=key)
+    plt.legend(loc='upper right')
+    plt.show()
+

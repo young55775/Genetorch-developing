@@ -64,4 +64,4 @@ for k, v in graph.items():
         else:
             graph2[k] = v + graph[peer]
             done_list.extend([k,peer])
-plot_dict(graph2)
+
