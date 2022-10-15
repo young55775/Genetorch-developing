@@ -5,6 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import genetorch as gt
 import numpy as np
+import seaborn as sns
 
 matplotlib.use('TkAgg')
 
@@ -193,10 +194,10 @@ def region_freq(co_data, n):
     for i in group:
         if i[0] != 'MtDNA':
             if i[0] not in record_dict.keys():
-                record_dict[i[0]] = [0] * 210
+                record_dict[i[0]] = [0] * 420
             else:
                 try:
-                    ind = int(i[1]) // 100000
+                    ind = int(i[1]) // 50000
                     record_dict[i[0]][ind] += 1 / n
                 except:
                     error.append(i)
@@ -227,10 +228,24 @@ def get_heatmap(path):
     return heatmap
 
 
+def prun(sta):
+    new = []
+    for i in range(len(sta) - 1):
+        if not sta[i] == sta[i + 1] == 0:
+            new.append(sta[i])
+    return new
+
+
 def chrom_plot(heatmap, legend, key):
+    d = []
     for i in range(len(heatmap)):
-        plt.plot(list(range(210)), heatmap[i][key], linestyle='-', label=legend[i])
+        data = prun(heatmap[i][key])
+        plt.plot(list(range(len(data))), data, linestyle='--', label=legend[i], alpha=0.2)
+        d.append(data)
+    ave = np.mean(d, axis=0)
+    plt.plot(list(range(len(ave))), ave, label="Average")
     plt.legend(loc='upper right')
+    plt.title('Chromosome' + ' ' + key)
     plt.show()
 
 
@@ -242,6 +257,78 @@ def variation(heatmap):
             d.append(i[key])
         std = np.std(d, axis=0)
         plt.plot(list(range(210)), std, linestyle='-', label=key)
+        d = []
     plt.legend(loc='upper right')
     plt.show()
 
+
+def his(heatmap, legend, key):
+    data = []
+    for i in heatmap:
+        data.append(prun(i[key]))
+    plt.hist(data, 15, label=legend)
+    plt.legend(loc='upper right')
+    plt.title('Chromosome' + ' ' + key)
+    plt.show()
+
+
+def bar(heatmap, key):
+    data = []
+    for i in heatmap:
+        data.append(i[key])
+    ave = np.mean(data, axis=0)
+    plt.bar(range(len(ave)), ave)
+    plt.show()
+
+
+def kde(heatmap, legend, key):
+    sns.set_style("whitegrid")
+    for i in range(len(heatmap)):
+        sns.kdeplot(prun(heatmap[i][key]), fill=True, label=legend[i])
+    plt.legend(loc='upper right')
+    plt.title('Chromosome' + ' ' + key)
+    plt.show()
+
+
+def kde_all(heatmap):
+    chrom = ['I', 'II', 'III', 'IV', 'V', 'X']
+    for key in chrom:
+        d = []
+        for i in heatmap:
+            d.append(i[key])
+        mean = np.mean(d, axis=0)
+        sns.kdeplot(prun(mean), fill=True, label=key)
+    plt.legend(loc='upper right')
+    plt.show()
+
+
+# find low/high mutation region
+def outlier(dict):
+    low = {}
+    high = {}
+    for k, v in dict.items():
+        v = prun(v)
+        std = sum(v) / len(v)
+        if k not in low.keys():
+            low[k] = []
+        if k not in high.keys():
+            high[k] = []
+        for i in enumerate(v):
+            if i[1] <= std * 0.5:
+                low[k].append((i[0] * 50000, (i[0] + 1) * 50000))
+            if i[1] >= std * 1.5:
+                high[k].append((i[0] * 50000, (i[0] + 1) * 50000))
+    return low, high
+
+
+def outlier_plot(map):
+    chrom = {'I': 6, 'II': 5, 'III': 4, 'IV': 3, 'V': 2, 'X': 1}
+    color = ['crimson', 'c', 'm', 'y']
+    legend = ['uncoordinated', 'tbb-4', 'tba-5', 'dumpy']
+    for k, y in chrom.items():
+        for i in range(len(map)):
+            if map[i][k] != []:
+                for j in map[i][k]:
+                    plt.plot(list(j), [y, y], c=color[i], linewidth=10, label=legend[i])
+                y -= 0.15
+    plt.show()
