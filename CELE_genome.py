@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import genetorch as gt
 import numpy as np
 import seaborn as sns
+from collections import Counter
 
 matplotlib.use('TkAgg')
 
@@ -230,8 +231,8 @@ def get_heatmap(path):
 
 def prun(sta):
     new = []
-    for i in range(len(sta) - 1):
-        if not sta[i] == sta[i + 1] == 0:
+    for i in range(len(sta) - 2):
+        if not sta[i] == sta[i + 1] == sta[i + 2] == 0:
             new.append(sta[i])
     return new
 
@@ -308,15 +309,16 @@ def outlier(dict):
     high = {}
     for k, v in dict.items():
         v = prun(v)
-        std = sum(v) / len(v)
+        mean = sum(v) / len(v)
+        sd = np.std(v)
         if k not in low.keys():
             low[k] = []
         if k not in high.keys():
             high[k] = []
         for i in enumerate(v):
-            if i[1] <= std * 0.5:
+            if i[1] <= mean - sd:
                 low[k].append((i[0] * 50000, (i[0] + 1) * 50000))
-            if i[1] >= std * 1.5:
+            if i[1] >= mean + sd:
                 high[k].append((i[0] * 50000, (i[0] + 1) * 50000))
     return low, high
 
@@ -325,10 +327,94 @@ def outlier_plot(map):
     chrom = {'I': 6, 'II': 5, 'III': 4, 'IV': 3, 'V': 2, 'X': 1}
     color = ['crimson', 'c', 'm', 'y']
     legend = ['uncoordinated', 'tbb-4', 'tba-5', 'dumpy']
+    labeled = []
+    fig, ax = plt.subplots()
     for k, y in chrom.items():
         for i in range(len(map)):
             if map[i][k] != []:
                 for j in map[i][k]:
-                    plt.plot(list(j), [y, y], c=color[i], linewidth=10, label=legend[i])
-                y -= 0.15
+                    if legend[i] not in labeled:
+                        ax.plot(list(j), [y, y], c=color[i], linewidth=5, label=legend[i])
+                        labeled.append(legend[i])
+                    else:
+                        ax.plot(list(j), [y, y], c=color[i], linewidth=5)
+                y -= 0.12
+    ax.legend(loc='upper right')
+    ax.set_yticks([1, 2, 3, 4, 5, 6])
+    ax.set_yticklabels(('X', 'V', 'IV', 'III', 'II', 'I'))
     plt.show()
+
+
+# find the gene in these regions:
+# if a high/low region appear 3 times in different screening, select it!
+def selection(out):
+    res = {}
+    chrom = ['I', 'II', 'III', 'IV', 'V', 'X']
+    for key in chrom:
+        if key not in res.keys():
+            res[key] = []
+        for i in out:
+            res[key].extend(i[key])
+    for k, v in res.items():
+        res[k] = [n for n, m in dict(Counter(v)).items() if m >= 3]
+    return res
+
+
+# get the sequence
+def acquire_seq(res, genome):
+    seq = {}
+    for k, v in res.items():
+        if k not in seq.keys():
+            seq[k] = []
+        for i in v:
+            seq[k].append(genome[k][i[0]:i[1]])
+    return seq
+
+
+# count seq of all:
+def count_seq(seq):
+    res = {}
+    for k, v in seq.items():
+        for i in v:
+            for j in range(len(i) - 2):
+                code = ''.join([i[j], i[j + 1], i[j + 2]])
+                if code not in res.keys():
+                    res[code] = 1
+                else:
+                    res[code] += 1
+    return res
+
+
+# calculate percentage
+def norm(dict):
+    val = list(dict.values())
+    s = sum(val)
+    for k, v in dict.items():
+        dict[k] = v / s
+
+
+# A/T C/G percentage of seq
+def atcg(seq):
+    per = {'A/T': 0, 'C/G': 0}
+    for i in seq:
+        if i == 'A' or i == 'T':
+            per['A/T'] += 1
+        else:
+            per['C/G'] += 1
+    return per
+
+
+def split_genome(genome, length):
+    split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
+    for k, v in genome.items():
+        for i in range(int(21000000) // int(length)):
+            start = i * length
+            end = start + length
+            if start <= len(v):
+                at = atcg(v[start:end])
+                a = at['A/T'] / sum(list(at.values()))
+                a -= 0.6
+                split[k].append(a)
+            else:
+                break
+    return split
