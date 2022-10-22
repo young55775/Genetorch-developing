@@ -220,6 +220,36 @@ def gene_filter(a, lengthlimit=0.6):
     return filt
 
 
+def get_impact(a):
+    newtaglist = []
+    for i in range(len(a.taglist)):
+        n = a.taglist[i]
+        lista = []
+        listb = []
+        splice_donor = n[n['type'] == 'splice_donor_variant&intron_variant']['protein'].tolist()
+        splice_acceptor = n[n['type'] == 'splice_acceptor_variant&intron_variant']['protein'].tolist()
+        for i in range(len(splice_donor)):
+            lista.append('X_donor')
+        for i in range(len(splice_acceptor)):
+            listb.append('X_acceptor')
+        c = pd.DataFrame(n[n['type'] == 'splice_donor_variant&intron_variant'])
+        d = pd.DataFrame(n[n['type'] == 'splice_acceptor_variant&intron_variant'])
+        c['protein'] = lista
+        d['protein'] = listb
+        n = pd.concat([n, c, d])
+        indp = search(n, 'protein', '')
+        indq = search(n, 'protein', 'nan')
+        ind = search(n, 'type', 'synonymous_variant')
+        m = n.loc[ind, :]
+        b = n.loc[indp, :]
+        e = n.loc[indq, :]
+        n = pd.concat([m, n, e]).drop_duplicates(keep=False)
+        total = pd.concat([n, b]).drop_duplicates(keep=False)
+        newtaglist.append(total)
+    a.taglist = newtaglist
+    return a.taglist
+
+
 def get_heatmap(path):
     f = readfile(path)
     co = gene_filter(f, 8)
@@ -227,14 +257,6 @@ def get_heatmap(path):
     heatmap = region_freq(co, n)
     heat_map_dict(heatmap)
     return heatmap
-
-
-def prun(sta):
-    new = []
-    for i in range(len(sta) - 2):
-        if not sta[i] == sta[i + 1] == sta[i + 2] == 0:
-            new.append(sta[i])
-    return new
 
 
 def chrom_plot(heatmap, legend, key):
@@ -410,7 +432,8 @@ def split_genome(genome, length):
         for i in range(int(21000000) // int(length)):
             start = i * length
             end = start + length
-            if start <= len(v):
+            n = len(v)
+            if int(start) <= int(n):
                 at = atcg(v[start:end])
                 a = at['A/T'] / sum(list(at.values()))
                 a -= 0.6
@@ -418,3 +441,347 @@ def split_genome(genome, length):
             else:
                 break
     return split
+
+
+# classify high and low freq
+def classification(freq_dict):
+    high = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': []}
+    mid = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': []}
+    low = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': []}
+    value = []
+    for k, v in freq_dict.items():
+        line = [n[2] for n in v]
+        value.extend(line)
+    ave = np.mean(value)
+    std = np.std(value)
+    for k, v in freq_dict.items():
+        for i in v:
+            if i[2] < (ave - std):
+                low[k].append(i)
+            elif i[2] > (ave + std):
+                high[k].append(i)
+            else:
+                mid[k].append(i)
+    return high, mid, low
+
+
+import numpy as np
+
+
+def pca(X, k):  # k is the components you want
+    # mean of each feature
+    n_samples, n_features = X.shape
+    mean = np.array([np.mean(X[:, i]) for i in range(n_features)])
+    # normalization
+    norm_X = X - mean
+    # scatter matrix
+    scatter_matrix = np.dot(np.transpose(norm_X), norm_X)
+    # Calculate the eigenvectors and eigenvalues
+    eig_val, eig_vec = np.linalg.eig(scatter_matrix)
+    eig_pairs = [(np.abs(eig_val[i]), eig_vec[:, i]) for i in range(n_features)]
+    # sort eig_vec based on eig_val from highest to lowest
+    eig_pairs.sort(reverse=True)
+    # select the top k eig_vec
+    feature = np.array([ele[1] for ele in eig_pairs[:k]])
+    # get new data
+    data = np.dot(norm_X, np.transpose(feature))
+    return data
+
+
+# poly和count数序列中的连续片段
+def poly(seq):
+    dic = {'AAA': 0, 'CCC': 0}
+    for k in dic.keys():
+        dic[k] = count_continue(k, seq)
+    return dic
+
+
+def count_continue(pattern, seq):
+    init = True
+    count = 0
+    res = 0
+    for i in range(len(seq) - 2):
+        match = ''.join([seq[i], seq[i + 1], seq[i + 2]])
+        if match == pattern:
+            count += 1
+            init = False
+        if match != pattern:
+            if init == False:
+                count += 2
+                init = True
+                if count >= 10:
+                    res += count
+                    count = 0
+                else:
+                    count = 0
+    return res
+
+
+# 把所有的AT变成A，GC变成G试一试
+def transform_seq(seq):
+    new_seq = []
+    for i in seq:
+        if i == 'A' or i == 'T':
+            new_seq.append('A')
+        else:
+            new_seq.append('C')
+    return ''.join(new_seq)
+
+
+def fill(length, map):
+    for i in map:
+        while len(i) < length:
+            i.append(0)
+
+
+# 在一个dict中选取前28位d
+def select(dic, rank):
+    trans_dict = list(zip(list(dic.keys()), list(dic.values())))
+    trans_dict.sort(key=lambda x: x[1], reverse=True)
+    return (trans_dict[:rank])
+
+
+# 比较两组的方差
+def compare(s1, s2):
+    k1 = [n[0] for n in s1]
+    k2 = [n[0] for n in s2]
+    k3 = []
+    k3.extend(k1)
+    k3.extend(k2)
+    kf = list(set(k3))
+    std = 0
+    for i in kf:
+        if i in k1:
+            a = s1[k1.index(i)][1]
+        else:
+            a = 0
+        if i in k2:
+            b = s2[k2.index(i)][1]
+        else:
+            b = 0
+        std += abs(a - b)
+    return std
+
+
+def impact_heatmap(lst, length, standard):
+    genome = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': []}
+    ind = np.arange(0, 71 * 300000, length)
+    for i in genome.keys():
+        for j in range(len(ind) - 1):
+            block = {}
+            start = ind[j]
+            end = ind[j + 1]
+            for k in lst:
+                if k[0] == i and start <= k[1] < end:
+                    key = k[2]
+                    if key not in block.keys():
+                        block[key] = 1
+                    else:
+                        block[key] += 1
+            if block != {}:
+                norm(block)
+                s1 = select(block, 28)
+                genome[i].append(compare(s1, standard))
+            else:
+                genome[i].append(0)
+    return genome
+
+
+def process(co):
+    chrom = co['chrom'].to_list()
+    pos = co['pos'].to_list()
+    protein = co['protein'].to_list
+    protein = co['protein'].to_list()
+    protein = [transform(n) for n in protein]
+    return list(zip(chrom, pos, protein))
+
+
+def transform(description):
+    if 'p.' in description:
+        p = description.split('.')[1]
+        if len(p) >= 7 and p[-1] != '*' and p[-2:] != 'fs':
+            m = p[0:3] + '->' + p[-3:]
+            return m
+        elif p[-1] == '*':
+            m = p[0:3] + '->*'
+            return m
+        elif p[-2:] == 'fs':
+            m = p[0:3] + '->fs'
+            return m
+        else:
+            return p
+    else:
+        return description
+
+
+def freq_data(co_data):
+    protein = co_data['protein'].to_list()
+    protein = [transform(n) for n in protein]
+    res = dict(Counter(protein))
+    return res
+
+
+def codon_heatmap(co, genome, length):
+    lst = list(zip(co['chrom'].to_list(), co['pos'].to_list()))
+    res = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': []}
+    ind = np.arange(0, 71 * 300000, length)
+    for i in res.keys():
+        print(i)
+        for j in range(len(ind) - 1):
+            start = ind[j]
+            end = ind[j + 1]
+            block = {}
+            for k in lst:
+                chrom = k[0]
+                pos = k[1]
+                if chrom == i and start <= pos < end:
+                    codon = ''.join([genome[chrom][pos - 2], genome[chrom][pos - 1], genome[chrom][pos]])
+                    if codon not in block.keys():
+                        block[codon] = 1
+                    else:
+                        block[codon] += 1
+            norm(block)
+            res[i].append(block)
+    return res
+
+
+# 把字典里比如TCC GGA求和作为一个数
+# 1.三联密码子转换函数
+def matching(codon):
+    td = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    seq = list(codon)
+    seq = seq[::-1]
+    return ''.join([td[seq[0]], td[seq[1]], td[seq[2]]])
+
+
+# 2.输入字典转换为和
+def combine(dic):
+    new = {}
+    for k, v in dic.items():
+        m = matching(k)
+        if m in dic.keys():
+            a = v + dic[m]
+        else:
+            a = v + 0
+        new[k] = a
+    return new
+
+
+# 2.5:填空
+def fill_comb(comb, dic):
+    for i in comb:
+        if i not in dic.keys():
+            dic[i] = 0
+
+
+# 3.取得各key的排名
+def sort_dict(dic):
+    sort = sorted(dic.items(), key=lambda item: item[1], reverse=True)
+    rank = 1
+    rank_list = []
+    for i in sort:
+        i = list(i)
+        i.append(rank)
+        rank += 1
+        rank_list.append(i)
+    return rank_list
+
+
+# 在list（codon,rate,rank）中输入codon返回rank
+def search_codon(lst, codon):
+    for i in lst:
+        if i[0] == codon:
+            return i[2]
+
+
+# 比较前四位的指标
+def ranking(lst1, lst2):
+    key = ['TCT', 'AGA', 'GGA', 'TTC']
+    gap = 0
+    for i in key:
+        gap += abs(search_codon(lst1, i) - search_codon(lst2, i))
+    return gap
+
+
+# 4.获取全局的排序
+def rank_all(co, genome):
+    lst = list(zip(co['chrom'].to_list(), co['pos'].to_list()))
+    all_dic = {}
+    for i in lst:
+        chrom = genome[i[0]]
+        codon = ''.join([chrom[i[1] - 2], chrom[i[1] - 1], chrom[i[1]]])
+        if codon not in all_dic.keys():
+            all_dic[codon] = 1
+        else:
+            all_dic[codon] += 1
+    return all_dic
+
+
+def prun(sta):
+    i = len(sta) - 1
+    while sta[i] == 0:
+        del sta[i]
+        i -= 1
+    return sta
+
+
+# 5.比较分区和全局
+def ranking_compare(hm, std, comb):
+    heatmap = {}
+    for k, v in hm.items():
+        if k not in heatmap.keys():
+            heatmap[k] = []
+        for i in v:
+            if i != {}:
+                fill_comb(comb, i)
+                i_new = combine(i)
+                i_new = sort_dict(i_new)
+                val = ranking(i_new, std)
+            else:
+                val = 0
+            heatmap[k].append(val)
+    return heatmap
+
+
+def slide(seq):
+    record = []
+    for i in range(len(seq) - 2):
+        record.append(''.join([seq[i], seq[i + 1], seq[i + 2]]))
+    return record
+
+
+# 计算三连碱基的突变频率
+def triple_mut_rate(genome, co, length):
+    split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}  # 各个区段有多少个哪种三连碱基
+    for k, v in genome.items():
+        for i in range(int(21000000) // int(length)):
+            start = i * length
+            end = start + length
+            n = len(v)
+            if int(start) <= int(n):
+                at = v[start:end]
+                rec = slide(at)
+                split[k].append(dict(Counter(rec)))
+            else:
+                break
+
+    all_dict = rank_all(co, genome)
+    full_dict = []
+    for i in genome.values():
+        full_dict.extend(slide(i))
+    full_dict = dict(Counter(full_dict))
+    standard_rate = {}
+    for k, v in all_dict.items():
+        r = v / full_dict[k]
+        standard_rate[k] = r
+
+    rate_dict = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
+    for k, v in split.items():
+        for i in v:
+            sub = {}
+            for m, n in i.items():
+                rate = n * standard_rate[m]
+                sub[m] = rate
+            rate_dict[k].append(sub)
+
+    return standard_rate,rate_dict
