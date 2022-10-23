@@ -750,6 +750,25 @@ def slide(seq):
     return record
 
 
+#计算一个co内每个triple base的突变率
+def standard_rate(co,genome):
+    chrom = co['chrom'].to_list() #计数有多少个triple被突变了
+    pos = co['pos'].to_list()
+    res = []
+    for i in range(len(chrom)):
+        code = ''.join([genome[chrom[i]][pos[i]-2],genome[chrom[i]][pos[i]-1],genome[chrom[i]][pos[i]]])
+        res.append(code)
+    count = dict(Counter(res))
+    all = []
+    for i in genome.keys(): #计算全基因的triple数
+        all.extend(slide(genome[i]))
+    count_all = dict(Counter(all))
+    re = {}
+    for k in count.keys():
+        val = count[k]/count_all[k]
+        re[k] = val
+    return re
+
 #计算按照突变频率每300000bp内会有多少个什么类型的突变
 def standard_mut_block(genome,length,standard_rate,comb):
     split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
@@ -798,9 +817,33 @@ def block_mut_co(co,genome,length,comb):
 #一个简单函数，将两个字典中指定的值作方差，放入一个新字典:
 
 compare_list = ['CCC','GGG','CGG','CCG','CGC','GCG','GGC','GCC','TGG','GGT','TCC','CCT','AGG','GGA','ACC','CCA','TCT','TGT','ACA'
-                'AGA',]
-def variation(dict1,dict2,compare_list):
+                'AGA','']
+def variation(dict1,dict2):
     res = 0
-    for k in compare_list:
+    for k in dict1.keys():
         res += (dict1[k] - dict2[k])**2
-    return (res/len(compare_list))**0.5
+    return (res/64)**0.5
+
+#把预测的和实际获得的作标准差
+def predict_var(std,mut):
+    res = {}
+    for k,v in std.items():
+        if k not in res.keys():
+            res[k] = []
+        for i in range(len(v)):
+            res[k].append(variation(v[i],mut[k][i]))
+    return res
+
+if __name__ == '__main__':
+    tbb = readfile('dumpy')
+    tbb_co = gene_filter(tbb, 8)
+    genome = read_genome('genome')
+    standard = standard_rate(tbb_co, genome)
+    tbb_mut = block_mut_co(tbb_co, genome, 300000, comb)
+    tbb_std = standard_mut_block(genome, 300000, standard, comb)
+    res = predict_var(tbb_std,tbb_mut)
+    for k in res.keys():
+        while len(res[k]) < 70:
+            res[k].append(0)
+    del res['MtDNA']
+    heat_map_dict(res)
