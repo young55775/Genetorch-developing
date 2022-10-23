@@ -750,9 +750,9 @@ def slide(seq):
     return record
 
 
-# 计算三连碱基的突变频率
-def triple_mut_rate(genome, co, length):
-    split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}  # 各个区段有多少个哪种三连碱基
+#计算按照突变频率每300000bp内会有多少个什么类型的突变
+def standard_mut_block(genome,length,standard_rate,comb):
+    split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
     for k, v in genome.items():
         for i in range(int(21000000) // int(length)):
             start = i * length
@@ -760,28 +760,47 @@ def triple_mut_rate(genome, co, length):
             n = len(v)
             if int(start) <= int(n):
                 at = v[start:end]
-                rec = slide(at)
-                split[k].append(dict(Counter(rec)))
+                a = {}
+                for i in range(len(at)-2):
+                    code = ''.join([at[i],at[i+1],at[i+2]])
+                    if code not in a.keys():
+                        a[code] = standard_rate[code]
+                    else:
+                        a[code] += standard_rate[code]
+                fill_comb(comb,a)
+                split[k].append(a)
             else:
                 break
+    return split
 
-    all_dict = rank_all(co, genome)
-    full_dict = []
-    for i in genome.values():
-        full_dict.extend(slide(i))
-    full_dict = dict(Counter(full_dict))
-    standard_rate = {}
-    for k, v in all_dict.items():
-        r = v / full_dict[k]
-        standard_rate[k] = r
+#计算一个co_data里按分区会有多少突变
+def block_mut_co(co,genome,length,comb):
+    res = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
+    chrom = co['chrom'].to_list()
+    pos = co['pos'].to_list()
+    for k in res.keys():
+        c = genome[k]
+        for i in range(int(21000000) // int(length)):
+            start = i*length
+            end = start + length
+            block = {}
+            for j in range(len(chrom)):
+                if chrom[j] == k and start<=pos[j]<end:
+                    code = ''.join([c[pos[j]-2],c[pos[j]-1],c[pos[j]]])
+                    if code not in block.keys():
+                        block[code] = 1
+                    else:
+                        block[code] += 1
+            fill_comb(comb,block)
+            res[k].append(block)
+    return res
 
-    rate_dict = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
-    for k, v in split.items():
-        for i in v:
-            sub = {}
-            for m, n in i.items():
-                rate = n * standard_rate[m]
-                sub[m] = rate
-            rate_dict[k].append(sub)
+#一个简单函数，将两个字典中指定的值作方差，放入一个新字典:
 
-    return standard_rate,rate_dict
+compare_list = ['CCC','GGG','CGG','CCG','CGC','GCG','GGC','GCC','TGG','GGT','TCC','CCT','AGG','GGA','ACC','CCA','TCT','TGT','ACA'
+                'AGA',]
+def variation(dict1,dict2,compare_list):
+    res = 0
+    for k in compare_list:
+        res += (dict1[k] - dict2[k])**2
+    return (res/len(compare_list))**0.5
