@@ -23,7 +23,8 @@ matplotlib.use('TkAgg')
 #         genome[key] += i.split('\n')[0]
 # print('done')
 
-
+comb_5 = ["GCCAC","TACCT","CCCCC","AACAG","TCTCC","CCCTG","ATCTT","AGTGC","TCCTT","TTCTT","CACCC","CCCCA","AGCCT","CGAAA","AATAA","CCACC","GATTT","TTCCA","AACTT","TTCCC","ATTCT","TTGTG","TTCGA","TGCTT","ATGCA","ACCAT","TCCCG","CTCAT","CTTTC","TTTAG","CTCTT","GCCCG","AGCAC","CTCTC","ACCAC","AGCTG","TTCTC","ATCCT","TGTGT","CCCCT","AACCC","CTCCA","TTCCG","TTCAA","TGCAA","ATCAG","ACTGC","TTCCT","ATCGC","TGCTG","GTTGG","TTGCG","GACAA","AAAAA","AAAAT","TCACC","ATTAA","TGCGG","GGTTT","TGGAT","GAGTA","GAGTG","ATGAG","CTGAT","AACAA","ACGCA","TTGTC","TTTCA","TCGAA","CGGAA","GGGGG","CATTG","GAGAA","GGGGT","TAGGT","AGGCA","CAGAG","GCGCC","AGGGG","GGGCG","AAGGT","CTGAA","GCGTG","AAACT","AAGAA","AAGGA","CAGCA","AAGCT","AAGCA","TAGTA","GAGAG","GTGCA","CCGTG","TAGAG","AAGAG","GAGGA","ACGGT","TGATA","TGATT","ATGAT","AAGGG","TGGGT","TAGGC","AGGGA","TCGCC","GTCGA","TCGAT","TTGAA","TCGCA","AGGAG","GCGGT","ACGCT","GTGCG","ATGTG","GGGAC","TGGAA","TTTCC","GCCCT","TTCTG","TGCGT","AACTG","CACAT","TGCAT","CACCG","GACTC","CACGA","CCCAT","TCCAA","CGCCG","GGCAC","CGTAC","GACGA","TTCAT","GCCGG","TCCTC","ATCGA","TGCGA","TACTC","ATCAC","ACCTA","AGCGA","CGCCC","ACCTT","CGCCA","AGCTT","AACAT","TTCTA","AACAC","ACCAA","CTCGC","GACCA","CCCCG","ACCTC","TGCCG","AGCGT","GCCGC","GTCTC","CCCGC","GACTT","TCCGG","TCCAT","ATGTT","GCCGA","CGCGA","CACCA","CTCGA","AGCGG","GCTTC","AACTC","CAAGG","TGGGG","AACCT","CAGAA","ATAGC","GTCGG","ACCTG","AGCAT","GTAGT","GTAGA","AAATG","AGTGG","AGGAA","GTGAA","ATGTA","AAGTT","CTGTT","GCGAA","GGGCA","GTGTA","CCGCA","ATACT","TGGTA","CGGAT","CGGCG","TTGCT","TACAT","GTGAT","TCGGT","TAGCC","CGGGA","CTCGT","CCGGG","GAGAC","TTTGC","TTGAT","AAGAT","GAGCG","CGGTT","CTGCC","AAGTC","ACGAA","ATATT","GGGTA","AGGTA","TCGCT","TTGGA","GAGCA","TAGAT","CGGTA","CCGGA","GCACC","TGGTT","CAGCT","TAGAA","ACGCG","GAGGT","GCGCT","TTGTT","TGGAG","ACGGG","TGGCA","GTGTC","CGGGG","AGGCT","TCGCG","CGGGT","TTGAC","AATCA","TTGAG","CCGAA","AGGCC","CCGCT","TTATG","GTGCT","CAGTA","CCAAG","TGGTG","ATGCT","GGGAG","TCGTT","TCGTA","TTGGG","GCGCA","GAGTT","GGGTG","GATAT","GGAGA","CAGAT","AAATA","AGGCG","ACGTG","ACGTA","ATAGT","TAGTT","TGCAC","AGTCT","ATCCG","AGCAG","GATAA","GCCAG","CCCGT","AGCTC","TGCTA","CACTT","TCCAG","CACAA","CCCTC","TACCG","GCAAC","TGCCT","GACCT","TCCGT","CACTG","GCCAT","GCCCC","CGCCT","ATCTG","ACCCC","ATAAT","TCCGA","CGCAC","ATCGT","CTCCG","TACAA","TGCCA","TAATA","TTCAG","AAACG","TCCCC","AACCA","AGCCA","TCCCT","GTCTG","TCCGC","CGCGT","AGGAT","CTGCG","CGCAT","TATTT","CTCTA","TGACA","AAAGG","CATAC","CATAT","TGCTC","AGTCC","CACGC","GGCAA","TCATC","GACAT","CGATT","GTCCT","TTTAA","TCTGG","CTGGA","CTGGT","GTGGT","GGGAT","TTGCA","AGTTT","TTACT","CATCC","GTTAT","CGGCT","AGGTC","TAGGA","CCCTT","ACGAC","AGGGT","TCGAG","GAGAT","CAGGG","AATTT","TTAGG","GGCCA","GGCGA","TTAAA","GGATG","TTAGT","GTCAG","ATGTC","CTGAG","CTGTG","CAGGT","CGAGA","CAACC","GTGGA","CACTC","TACTG","ATCAT","GACGT","GTAAA","TTCGC","ATCCA","TACGC","TACAG","ATTCC","CGCAA","GAGCT","AAGAC","GGATT","TTTTC","CTCCC","AATGA","AAATT","ATCTC","CCCAG","CGCTC","TTCGT","ACTAT","CGCTT","CGCAG","GCCTG","TTTGA","CCCTA","CACAC","GGCTG","TACCA","ATCAA","CACTA","CGTCA","ACCCG","GCCAA","ACCGG","TGAAA","AGATT","CACCT","GTCCC","GCGCG","TACCC","ACTGA","ACTTT","TGCCC","CTGTA","CCCGA","AATAC","TGAAT","ACGAG","ATCGG","TATCC","GCCTA","AGCGC","CTCAC","TACGG","TTGCC","GGAGG","GCGTA","GAGTC","TTGTA","GCATT","CAGTG","TAAAT","CTGCA","CTGTC","GTGAG","CTGAC","TGAAG","TGGGA","GGAGC","GTGTG","TCTAA","CTACA","CGATA","ACATT","GGGAA","GGGGA","CAGGA","ATGCC","AATCC","CCGGT","ATGAA","CGGCA","CAGTT","GGTCG","CTCTG","GGCAT","AGCCC","CTCCT","ATATA","AATTA","ATCTA","TACTT","GGCTT","ATTGT","ACAAT","CTATA","GGGTT","GTCCA","CTCAG","GTCTA","TTAAG","TAAAA","TTTTT","CTGGG","CTTAA","CTTCC","ATCCC","TCGTC","AATGT","AATGG","TCATA","ACCGT","CGCTA","ATAGG","CTTGA","GTACC","GTATT","AATCG","TCCTG","TGGCC","CAATT","TAGCT","ATGGC","GTGCC","CAGCG","ATTTT","ACACC","AAGGC","AGTGT","AAATC","GAGCC","GGGCT","ACGAT","AAGTA","CCGAT","CAGTC","AATAT","GCATG","TTGGT","ATGCG","TAGAC","CAGAC","AAGTG","CGGTG","TCAAT","TTTGT","GCGGC","CCGCC","ATGAC","CCATA","TAGTG","ATTTG","AGCAA","CTAGG","CATCA","GTCAC","TGTGC","TGTGA","TGACT","CGCGG","TTATC","GCCTT","GGTAT","CGCTG","ACCCT","TGTTG","AATAG","GAAAC","ACCCA","GACTA","GTCAT","GTGTT","GTCTT","GTAGG","TGCGC","CTCAA","ACCAG","ACCGC","CCTCC","ATTCA","TATGC","TATAG","AACGT","TTCAC","TGTAG","CCCAA","GCGAT","GCTGC","TCAAC","TCTTT","GGACC","CATTC","CCAGC","AAAGA","CCGTT","TCGGA","TAGCA","TGGCG","CCATT","AGGTT","TAGGG","GGTGA","GAAGG","TCAAA","AAACA","CGGAG","AACCG","GCATA","AGATC","ATTTA","TTACC","CGTGG","GGCCC","CCAGA","GGCTC","TGCAG","AGCCG","ACTGG","ATTAT","GTTTG","CCCAC","AACGG","GCTTT","TAAGG","TCCCA","ATTAG","CTACC","CGTTA","ATACC","GAAAA","CTATT","TTTAC","TAAAC","CCGAG","GCTCC","GTATC","GAGGC","TCAGA","TTTTG","TTAGC","GGTGC","CTGGC","TCTAG","TATTC","TCTTA","GCAGC","GAACT","AAAAC","CAAAT","TAAGC","AGATA","GTTTA","AACTA","TGTAA","CACAG","AGAAA","TCCAC","CGCGC","TTTGG","TCATT","TTAGA","TGTTA","CCGTA","CGGCC","ATTGG","TTTTA","TCCTA","CACGT","TTTAT","GGCAG","CCTGT","GCGGA","ACGTT","TTGGC","GACAC","CGGAC","GACCC","TATAT","GTCGC","GCCCA","CAGCC","AAAGT","AAGCC","CGAGG","AAAGC","AGGTG","ATGGA","ACGCC","AGGGC","TAATG","TCTAC","AGGAC","CTACT","GCGAG","GTATG","TAACA","AGAAT","TTTCT","AGTAC","GAATA","TCGGG","TTATT","ACAGA","GAATT","GTCGT","GTCCG","CGTGA","TGTCT","TCTCA","AGTCA","AATTC","GAACC","GACTG","AGACA","GGCGT","GGCGC","CATGT","TGAGC","AGACG","GTACT","AGTAA","CCAAT","ATAGA","TCACG","GACGG","GTTCC","TTATA","GTCAA","ACGGA","CAAAA","TCAAG","GATTA","TTACG","TGGTC","AAGCG","GCAGT","CAAAC","GTGAC","CCGAC","GACGC","TGAGT","GGCTA","TACTA","TTCGG","CCCGG","GGAGT","ACAAC","TCTCT","AACGC","CATTT","GCTAC","CAGGC","CGTTT","ACTCC","TGTCC","CTGCT","GAGGG","TAGCG","CGATG","TAATT","AGACT","GTGGC","CCACT","TCAGT","GATCC","TGAGA","GTTTT","CGAAT","GCGGG","GGGGC","ATACA","GATGG","TACAC","GACCG","TCTGT","AATCT","TGTAT","GCTGA","ACAGG","GCAAT","AGAGG","GGGTC","GCGTT","TATTA","TGTTT","ATGGG","TCACA","GGTAA","ATTTC","CAAGT","TATAA","GATAC","CATTA","ACTAA","AGTAT","CTTCG","TGGAC","TCAGG","CGACT","TCTCG","AGACC","ATTGA","TCGTG","AGTTC","CTAGT","AAACC","AATTG","TGTGG","AGCTA","TGAGG","ATTGC","TACGA","TGACC","TACGT","GGTGG","CATAA","GCACT","GTGGG","GAAGA","AAAAG","TCGAC","CGACC","GGACA","CCGTC","GGCCT","CGACG","TCTTG","GAAAT","CTAGA","GGAAT","GACAG","GTTGC","TATCT","AACGA","ACAGT","CTATG","TAACC","GTTGA","CCGCG","CTCGG","TTAAT","TAGTC","CCGGC","GATGA","CGTCG","ACGTC","CCTGG","ATGGT","ATTAC","GTATA","CAATG","ACATA","TATGA","GGCGG","ACACT","ATAAA","CCACA","CGTAT","GGTCA","GGAAG","GCTGT","TGGCT","AGATG","TATCA","CAATA","AGTTG","ACATG","CACGG","GCCTC","TGATG","TGGGC","ACAGC","CCTTC","GCACA","TCGGC","CGGGC","GCCGT","TGTCA","TTACA","ACAAA","CAAAG","CGGTC","TCTAT","GGGCC","CTTCA","GAACG","GAAAG","GATTG","GCAAG","TGTTC","CCTTG","GCAGA","TCTGA","TGACG","GCAAA","ACCGA","GTACA","GAATC","GATCT","AGTGA","TATGT","GCTGG","ACTTA","ATATG","TGTCG","TGTAC","AGTCG","AATGC","TATTG","ATATC","CTTGG","CCTCA","GCGTC","ATAAC","CGTGT","CCTTT","CCTCG","TCACT","AGTAG","CCAGT","TAATC","GGAAC","CAATC","CCTAG","CTAAA","TATGG","GAATG","GTTGT","GGACG","CATAG","AGAAG","CCAAA","CCTAA","TATAC","CAAGA","CTTTG","CGACA","CGATC","GCATC","GTTAA","CCTAC","ACTAG","CCAAC","AGTTA","ACTCA","GGAAA","ACACG","ACGGC","GTTCT","GGCCG","GTAAT","CTTTT","GCTCA","ACTAC","GCGAC","CAAGC","TTAAC","CCATC","GTTTC","TCTGC","ACAAG","CTTAT","CATCG","GAACA","CAACA","CTTTA","TGAAC","TCATG","GCAGG","ATAAG","CGTTG","GGTGT","GGTCC","CCAGG","TATCG","GCTTA","AGAGC","GAAGC","ACTTG","GGTTA","ATTCG","CATGA","GATTC","CGTGC","CCATG","CTTGT","CCTCT","CGAAG","CTATC","GTAAG","GCTCG","GTTCA","CCTAT","GTACG","GGATA","ACACA","GATGC","TCTTC","GGTCT","CGAGC","CATGG","CTAAT","GATCG","ACTCG","GTAAC","CTAAC","GGTTG","CAACG","CTTCT","TAAGA","TAACG","CATCT","GATAG","GCTAA","GTTAG","CGTAG","TAAAG","CTTAC","GGATC","ACTGT","CGTAA","GAAGT","CTAGC","GGTAG","CCACG","GATGT","ACTTC","GGACT","CATGC","GGTTC","TTTCG","CCTGA","GTTCG","GCTCT","CGTCC","GCTAT","GCACG","AGAAC","CTAAG","GTAGC","CAACT","CTACG","CGTCT","TCAGC","GGTAC","GCTTG","CTTGC","CTTAG","ACATC","CCTTA","CGTTC","GATCA","CGAGT","TAACT","TAAGT","GTTAC","CCTGC","TGATC","ACTCT","AGAGT","AGAGA","ATACG","CGAAC"
+]
 def search(df, col, kw):
     return df[col] == kw
 
@@ -138,18 +139,11 @@ def plot_dict(dict):
     data = list(zip(*dict_sort))
     label = data[0]
     val = list(data[1])
-    sumer = sum(val)
-    val = [n / sumer for n in val]
     plt.bar(range(len(val)), val, tick_label=label)
     plt.xticks(rotation=75)
     plt.show()
 
 
-def run(path):
-    a = readfile(path)
-    gt.finder.filter(a, 8)
-    codon = get_codon_dict(a.co_data, genome)
-    plot_dict(codon)
 
 
 comb = ['ATG', 'AGT', 'GTA', 'GAT', 'TAG', 'TGA',
@@ -750,27 +744,28 @@ def slide(seq):
     return record
 
 
-#计算一个co内每个triple base的突变率
-def standard_rate(co,genome):
-    chrom = co['chrom'].to_list() #计数有多少个triple被突变了
+# 计算一个co内每个triple base的突变率
+def standard_rate(co, genome):
+    chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
     for i in range(len(chrom)):
-        code = ''.join([genome[chrom[i]][pos[i]-2],genome[chrom[i]][pos[i]-1],genome[chrom[i]][pos[i]]])
+        code = ''.join([genome[chrom[i]][pos[i] - 2], genome[chrom[i]][pos[i] - 1], genome[chrom[i]][pos[i]]])
         res.append(code)
     count = dict(Counter(res))
     all = []
-    for i in genome.keys(): #计算全基因的triple数
+    for i in genome.keys():  # 计算全基因的triple数
         all.extend(slide(genome[i]))
     count_all = dict(Counter(all))
     re = {}
     for k in count.keys():
-        val = count[k]/count_all[k]
+        val = count[k] / count_all[k]
         re[k] = val
     return re
 
-#计算按照突变频率每300000bp内会有多少个什么类型的突变
-def standard_mut_block(genome,length,standard_rate,comb):
+
+# 计算按照突变频率每300000bp内会有多少个什么类型的突变
+def standard_mut_block(genome, length, standard_rate, comb):
     split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
     for k, v in genome.items():
         for i in range(int(21000000) // int(length)):
@@ -780,70 +775,151 @@ def standard_mut_block(genome,length,standard_rate,comb):
             if int(start) <= int(n):
                 at = v[start:end]
                 a = {}
-                for i in range(len(at)-2):
-                    code = ''.join([at[i],at[i+1],at[i+2]])
+                for i in range(len(at) - 2):
+                    code = ''.join([at[i], at[i + 1], at[i + 2]])
                     if code not in a.keys():
                         a[code] = standard_rate[code]
                     else:
                         a[code] += standard_rate[code]
-                fill_comb(comb,a)
+                fill_comb(comb, a)
                 split[k].append(a)
             else:
                 break
     return split
 
-#计算一个co_data里按分区会有多少突变
-def block_mut_co(co,genome,length,comb):
+
+# 计算一个co_data里按分区会有多少突变
+def block_mut_co(co, genome, length, comb):
     res = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
     chrom = co['chrom'].to_list()
     pos = co['pos'].to_list()
     for k in res.keys():
         c = genome[k]
         for i in range(int(21000000) // int(length)):
-            start = i*length
+            start = i * length
             end = start + length
             block = {}
             for j in range(len(chrom)):
-                if chrom[j] == k and start<=pos[j]<end:
-                    code = ''.join([c[pos[j]-2],c[pos[j]-1],c[pos[j]]])
+                if chrom[j] == k and start <= pos[j] < end:
+                    code = ''.join([c[pos[j] - 2], c[pos[j] - 1], c[pos[j]]])
                     if code not in block.keys():
                         block[code] = 1
                     else:
                         block[code] += 1
-            fill_comb(comb,block)
+            fill_comb(comb, block)
             res[k].append(block)
     return res
 
-#一个简单函数，将两个字典中指定的值作方差，放入一个新字典:
 
-compare_list = ['CCC','GGG','CGG','CCG','CGC','GCG','GGC','GCC','TGG','GGT','TCC','CCT','AGG','GGA','ACC','CCA','TCT','TGT','ACA'
-                'AGA','']
-def variation(dict1,dict2):
+# 一个简单函数，将两个字典中指定的值作方差，放入一个新字典:
+def variation(dict1, dict2):
     res = 0
+    n = 0
     for k in dict1.keys():
-        res += (dict1[k] - dict2[k])**2
-    return (res/64)**0.5
+        if k not in dict2.keys():
+            dict2[k] = 0
+        if k[1] == 'C' or k[1] == 'G':
+            res += (dict1[k] - dict2[k]) ** 2
+            n += 1
+    return (res / n) ** 0.5
 
-#把预测的和实际获得的作标准差
-def predict_var(std,mut):
+
+# 把预测的和实际获得的作标准差
+def predict_var(std, mut):
     res = {}
-    for k,v in std.items():
+    for k, v in std.items():
         if k not in res.keys():
             res[k] = []
         for i in range(len(v)):
-            res[k].append(variation(v[i],mut[k][i]))
+            res[k].append(variation(v[i], mut[k][i]))
     return res
 
-if __name__ == '__main__':
-    tbb = readfile('dumpy')
-    tbb_co = gene_filter(tbb, 8)
-    genome = read_genome('genome')
-    standard = standard_rate(tbb_co, genome)
-    tbb_mut = block_mut_co(tbb_co, genome, 300000, comb)
-    tbb_std = standard_mut_block(genome, 300000, standard, comb)
-    res = predict_var(tbb_std,tbb_mut)
+
+# 计算五连密码子
+def standard_rate_5(co, genome):
+    chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
+    pos = co['pos'].to_list()
+    res = []
+    for i in range(len(chrom)):
+        c = genome[chrom[i]]
+        p = pos[i]
+        code = ''.join([c[p - 3], c[p - 2], c[p - 1], c[p], c[p + 1]])
+        res.append(code)
+    count = dict(Counter(res))
+    all = []
+    for i in genome.keys():  # 计算全基因的triple数
+        all.extend(slide_5(genome[i]))
+    count_all = dict(Counter(all))
+    re = {}
+    for k in count.keys():
+        val = count[k] / count_all[k]
+        re[k] = val
+    return re
+
+
+def slide_5(seq):
+    record = []
+    for i in range(len(seq) - 4):
+        record.append(''.join([seq[i], seq[i + 1], seq[i + 2], seq[i + 3], seq[i + 4]]))
+    return record
+
+
+def block_mut_co_5(co, genome, length, comb):
+    res = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
+    chrom = co['chrom'].to_list()
+    pos = co['pos'].to_list()
     for k in res.keys():
-        while len(res[k]) < 70:
-            res[k].append(0)
-    del res['MtDNA']
-    heat_map_dict(res)
+        c = genome[k]
+        for i in range(int(21000000) // int(length)):
+            start = i * length
+            end = start + length
+            block = {}
+            for j in range(len(chrom)):
+                if chrom[j] == k and start <= pos[j] < end:
+                    code = ''.join([c[pos[j] - 3], c[pos[j] - 2], c[pos[j] - 1], c[pos[j]], c[pos[j] + 1]])
+                    if code not in block.keys():
+                        block[code] = 1
+                    else:
+                        block[code] += 1
+            fill_comb(comb, block)
+            res[k].append(block)
+    return res
+
+
+def standard_mut_block_5(genome, length, standard_rate, comb):
+    split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
+    for k, v in genome.items():
+        for i in range(int(21000000) // int(length)):
+            start = i * length
+            end = start + length
+            n = len(v)
+            if int(start) <= int(n):
+                at = v[start:end]
+                a = {}
+                for i in range(len(at) - 4):
+                    code = ''.join([at[i], at[i + 1], at[i + 2],at[i+3],at[i+4]])
+                    if code not in a.keys():
+                        a[code] = standard_rate[code]
+                    else:
+                        a[code] += standard_rate[code]
+                fill_comb(comb, a)
+                split[k].append(a)
+            else:
+                break
+    return split
+
+
+
+# if __name__ == '__main__':
+#     tbb = readfile('tbb-4')
+#     tbb_co = gene_filter(tbb, 8)
+#     genome = read_genome('genome')
+#     standard = standard_rate(tbb_co, genome)
+#     tbb_mut = block_mut_co(tbb_co, genome, 300000, comb)
+#     tbb_std = standard_mut_block(genome, 300000, standard, comb)
+#     res = predict_var(tbb_std, tbb_mut)
+#     for k in res.keys():
+#         while len(res[k]) < 70:
+#             res[k].append(0)
+#     del res['MtDNA']
+#     heat_map_dict(res)
