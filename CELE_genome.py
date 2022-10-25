@@ -908,6 +908,25 @@ def standard_mut_block_5(genome, length, standard_rate, comb):
                 break
     return split
 
+def analyze(seq,model): #输入5碱基的突变频率，预测整个基因的突变曲线
+    pro = []
+    for i in range(2,len(seq)-2):
+        code = ''.join([seq[i-2],seq[i-1],seq[i],seq[i+1],seq[i+2]])
+        pro.append(model[code])
+    return pro
+
+
+def get_seq(gene_name,range_path,genome): #获得seq的mRNA序列 需要文件WBcel235_rna
+    with open(range_path,'r') as f:
+        m = f.readlines()
+        for i in m:
+            if i.split('\t')[0] == gene_name:
+                chrom = i.split('\t')[1]
+                start = int(i.split('\t')[2])-3
+                end = int(i.split('\t')[3])+1
+                seq = genome[chrom][start:end+1]
+                break
+    return seq
 
 
 # if __name__ == '__main__':
@@ -923,3 +942,4 @@ def standard_mut_block_5(genome, length, standard_rate, comb):
 #             res[k].append(0)
 #     del res['MtDNA']
 #     heat_map_dict(res)
+
