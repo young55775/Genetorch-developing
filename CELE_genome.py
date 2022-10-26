@@ -210,7 +210,7 @@ def gene_filter(a, lengthlimit=0.6):
     conc = pd.DataFrame()
     for i in range(len(a.taglist)):
         conc = pd.concat([conc, a.taglist[i]])
-    filt = conc.groupby(['gene', 'protein', 'ID', 'base']).filter(lambda x: len(x) <= lengthlimit)
+    filt = conc.groupby(['chrom', 'pos']).filter(lambda x: len(x) <= lengthlimit)
     return filt
 
 
@@ -686,14 +686,17 @@ def search_codon(lst, codon):
     for i in lst:
         if i[0] == codon:
             return i[2]
+    return False
 
 
 # 比较前四位的指标
-def ranking(lst1, lst2):
-    key = ['TCT', 'AGA', 'GGA', 'TTC']
+def ranking(lst1, lst2, comb):
     gap = 0
-    for i in key:
-        gap += abs(search_codon(lst1, i) - search_codon(lst2, i))
+    for i in comb:
+        if i[2] == 'C' or i[2] == 'G' and search_codon(lst1, i) and search_codon(lst2, i):
+            k = abs(search_codon(lst1, i) - search_codon(lst2, i))
+            if k > 4:
+                gap += k
     return gap
 
 
@@ -836,7 +839,7 @@ def predict_var(std, mut):
 
 
 # 计算五连密码子
-def standard_rate_5(co, genome):
+def standard_rate_5(co, genome,scale):
     chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
@@ -853,7 +856,7 @@ def standard_rate_5(co, genome):
     re = {}
     for k in count.keys():
         val = count[k] / count_all[k]
-        re[k] = val
+        re[k] = val/scale
     return re
 
 
@@ -916,8 +919,8 @@ def analyze(seq,model): #输入5碱基的突变频率，预测整个基因的突
     return pro
 
 
-def get_seq(gene_name,range_path,genome): #获得seq的mRNA序列 需要文件WBcel235_rna
-    with open(range_path,'r') as f:
+def get_seq(gene_name,range_path,genome): #获得seq的DNA序列，由于评分是从第三个碱基开始到倒数第三个碱基终止，各往前后多取两个碱基
+    with open(range_path,'r') as f: #例如start = 50， end = 60的情况，取genome[47:62],也就是从genome的第48位取到第62位，经过analyze函数后依旧是10的长度
         m = f.readlines()
         for i in m:
             if i.split('\t')[0] == gene_name:
@@ -927,6 +930,45 @@ def get_seq(gene_name,range_path,genome): #获得seq的mRNA序列 需要文件WB
                 seq = genome[chrom][start:end+1]
                 break
     return seq
+
+def get_gene(gene_name,co,range_path): #从co中获取基因的突变信息
+    gene = co[co['gene'] == gene_name]
+    pos = gene['pos'].to_list()
+    with open(range_path, 'r') as f: #获得基因起点
+        m = f.readlines()
+        for i in m:
+            if i.split('\t')[0] == gene_name:
+                start = int(i.split('\t')[2])
+                end = int(i.split('\t')[3])
+                length = end - start + 1
+    pos = [int(n) - start for n in pos] #第一位变成0
+    plot = [0] * length
+    for i in pos:
+        if 0< i - 1 < length - 1:
+            plot[i] += 1
+    return plot
+
+def re(a): #阶乘
+    m = 1
+    for i in range(1,a+1):
+        m *= i
+    return m
+
+def combination(all,num): #求组合数
+    return re(all)/(re(num)*re(all-num))
+
+def evaluate(probability,count,scale): #评估一个位点的概率
+    if len(probability) != len(count):
+        raise (ValueError)
+    else:
+        color = []
+        for i in range(len(probability)):
+            p = probability[i]
+            c = count[i]
+            color.append(combination(scale,c)*(p**c)*((1-p)**(scale-c)))
+    return color
+
+
 
 
 # if __name__ == '__main__':
@@ -942,4 +984,13 @@ def get_seq(gene_name,range_path,genome): #获得seq的mRNA序列 需要文件WB
 #             res[k].append(0)
 #     del res['MtDNA']
 #     heat_map_dict(res)
+
+# tbb = readfile('tbb-4')
+# tbb_co = gene_filter(tbb, 8)
+# genome = read_genome('genome')
+# standard = standard_rate_5(tbb_co, genome)
+# standard['GCTAG'] = 0
+# tbb_mut = block_mut_co_5(tbb_co, genome, 300000, comb)
+# tbb_std = standard_mut_block_5(genome, 300000, standard, comb)
+# res = predict_var(tbb_std, tbb_mut)
 
