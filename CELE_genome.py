@@ -965,10 +965,20 @@ def evaluate(probability,count,scale): #评估一个位点的概率
         for i in range(len(probability)):
             p = probability[i]
             c = count[i]
-            color.append(combination(scale,c)*(p**c)*((1-p)**(scale-c)))
+            if combination(scale,c)*(p**c)*((1-p)**(scale-c)) > 0.5:
+                color.append(0.02)
+            else:
+                color.append(combination(scale,c)*(p**c)*((1-p)**(scale-c)))
     return color
 
 
+def norm_color(list): # 根据cmap需要生成0-1的数据
+    maxi = max(list)
+    mini = min(list)
+    multi = 1/(maxi-mini)
+    return [(1-n*multi) for n in list]
+
+# plt.scatter(x = list(range(48457)),y = dig_1_cm, c = plt.get_cmap('Reds')(norm_color(dig_1_cm)))
 
 
 # if __name__ == '__main__':
@@ -994,3 +1004,8 @@ def evaluate(probability,count,scale): #评估一个位点的概率
 # tbb_std = standard_mut_block_5(genome, 300000, standard, comb)
 # res = predict_var(tbb_std, tbb_mut)
 
+#获得预测的图片
+# cla_1_seq = get_seq('cla-1','gene_range',genome)
+# cla_1_pro = analyze(cla_1_seq,tbb_standard)
+# cla_1_count = get_gene('cla-1',tbb_co,'gene_range')
+# cla_1_cm = evaluate(cla_1_pro,cla_1_count,437)
