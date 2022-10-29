@@ -748,7 +748,7 @@ def slide(seq):
 
 
 # 计算一个co内每个triple base的突变率
-def standard_rate(co, genome):
+def standard_rate(co, genome,scale):
     chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
@@ -763,8 +763,8 @@ def standard_rate(co, genome):
     re = {}
     for k in count.keys():
         val = count[k] / count_all[k]
-        re[k] = val
-    return re
+        re[k] = val/scale
+    return re,count,count_all
 
 
 # 计算按照突变频率每300000bp内会有多少个什么类型的突变
@@ -915,7 +915,10 @@ def analyze(seq,model): #输入5碱基的突变频率，预测整个基因的突
     pro = []
     for i in range(2,len(seq)-2):
         code = ''.join([seq[i-2],seq[i-1],seq[i],seq[i+1],seq[i+2]])
-        pro.append(model[code])
+        if code in model.keys():
+            pro.append(model[code])
+        else:
+            pro.append(0)
     return pro
 
 
@@ -928,8 +931,9 @@ def get_seq(gene_name,range_path,genome): #获得seq的DNA序列，由于评分�
                 start = int(i.split('\t')[2])-3
                 end = int(i.split('\t')[3])+1
                 seq = genome[chrom][start:end+1]
-                break
-    return seq
+                return seq
+    return False
+
 
 def get_gene(gene_name,co,range_path): #从co中获取基因的突变信息
     gene = co[co['gene'] == gene_name]
@@ -972,11 +976,22 @@ def evaluate(probability,count,scale): #评估一个位点的概率
     return color
 
 
-def norm_color(list): # 根据cmap需要生成0-1的数据
-    maxi = max(list)
-    mini = min(list)
+def norm_color(lst): # 根据cmap需要生成0-1的数据
+    maxi = max(lst)
+    mini = min(lst)
     multi = 1/(maxi-mini)
-    return [(1-n*multi) for n in list]
+    return [(1-n*multi) for n in lst]
+
+
+def accumulate(pro_list):
+    ac = 0
+    for i in range(len(pro_list)):
+        line = pro_list[i]
+        for j in range(len(pro_list)):
+            if j != i:
+                line *= 1 - pro_list[j]
+        ac += line
+    return ac
 
 # plt.scatter(x = list(range(48457)),y = dig_1_cm, c = plt.get_cmap('Reds')(norm_color(dig_1_cm)))
 
@@ -998,7 +1013,7 @@ def norm_color(list): # 根据cmap需要生成0-1的数据
 # tbb = readfile('tbb-4')
 # tbb_co = gene_filter(tbb, 8)
 # genome = read_genome('genome')
-# standard = standard_rate_5(tbb_co, genome)
+# standard = standard_rate_5(tbb_co, genome,437)
 # standard['GCTAG'] = 0
 # tbb_mut = block_mut_co_5(tbb_co, genome, 300000, comb)
 # tbb_std = standard_mut_block_5(genome, 300000, standard, comb)
@@ -1009,3 +1024,135 @@ def norm_color(list): # 根据cmap需要生成0-1的数据
 # cla_1_pro = analyze(cla_1_seq,tbb_standard)
 # cla_1_count = get_gene('cla-1',tbb_co,'gene_range')
 # cla_1_cm = evaluate(cla_1_pro,cla_1_count,437)
+
+def centri(count9):
+    res = {}
+    for j in ['A', 'T', 'C', 'G']:
+        c = {'-4': {}, '-3': {}, '-2': {}, '-1': {}, '0': {}, '1': {}, '2': {}, '3': {}, '4': {}}
+        for i in count9.keys():
+            if i[4] == j:
+                if i[0]:
+                    if i[0] not in c['-4'].keys():
+                        c['-4'][i[0]] = count9[i]
+                    else:
+                        c['-4'][i[0]] += count9[i]
+                if i[1]:
+                    if i[1] not in c['-3'].keys():
+                        c['-3'][i[1]] = count9[i]
+                    else:
+                        c['-3'][i[1]] += count9[i]
+                if i[2]:
+                    if i[2] not in c['-2'].keys():
+                        c['-2'][i[2]] = count9[i]
+                    else:
+                        c['-2'][i[2]] += count9[i]
+                if i[3]:
+                    if i[3] not in c['-1'].keys():
+                        c['-1'][i[3]] = count9[i]
+                    else:
+                        c['-1'][i[3]] += count9[i]
+                if i[4]:
+                    if i[4] not in c['0'].keys():
+                        c['0'][i[4]] = count9[i]
+                    else:
+                        c['0'][i[4]] += count9[i]
+                if i[5]:
+                    if i[5] not in c['1'].keys():
+                        c['1'][i[5]] = count9[i]
+                    else:
+                        c['1'][i[5]] += count9[i]
+                if i[6]:
+                    if i[6] not in c['2'].keys():
+                        c['2'][i[6]] = count9[i]
+                    else:
+                        c['2'][i[6]] += count9[i]
+                if i[7]:
+                    if i[7] not in c['3'].keys():
+                        c['3'][i[7]] = count9[i]
+                    else:
+                        c['3'][i[7]] += count9[i]
+                if i[8]:
+                    if i[8] not in c['4'].keys():
+                        c['4'][i[8]] = count9[i]
+                    else:
+                        c['4'][i[8]] += count9[i]
+        res[j] = c
+    return res
+
+
+def norm_count9(count9):
+    for k,v in count9.items():
+        total = v['0'][k]
+        for a,b in v.items():
+            for m,n in b.items():
+                count9[k][a][m] = n/total
+    return count9
+
+def barh_dict(dict):
+    key = ['A','T','C','G']  #前处理，让中间那一列添加别的碱基为0
+    for i in key:
+        if i not in dict['0'].keys():
+            dict['0'][i] = 0
+    a = []
+    t = []
+    c = []
+    g = []
+
+    for v in dict.values():
+        a.append(v['A'])
+        t.append(v['T'])
+        c.append(v['C'])
+        g.append(v['G'])
+    labels = list(dict.keys())
+    plt.bar(labels,a,label = 'A')
+    plt.bar(labels,t,bottom=a,label = 'T')
+    plt.bar(labels,c,bottom=np.asarray(a)+np.asarray(t),label = 'C')
+    plt.bar(labels,g,bottom=np.asarray(a)+np.asarray(t)+np.asarray(c),label = 'G')
+    plt.legend(loc = 'upper right')
+    plt.show()
+
+
+
+
+def standard_rate_9(co, genome,scale):
+    chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
+    pos = co['pos'].to_list()
+    res = []
+    for i in range(len(chrom)):
+        c = genome[chrom[i]]
+        p = pos[i]
+        code = ''.join([c[p-5],c[p-4],c[p - 3], c[p - 2], c[p - 1], c[p], c[p + 1],c[p+2],c[p+3]])
+        res.append(code)
+    count = dict(Counter(res))
+    all = []
+    for i in genome.keys():  # 计算全基因的triple数
+        all.extend(slide_9(genome[i]))
+    count_all = dict(Counter(all))
+    re = {}
+    for k in count.keys():
+        val = count[k] / count_all[k]
+        re[k] = val/scale
+    return re,count,count_all
+def slide_9(seq):
+    record = []
+    for i in range(len(seq) - 8):
+        record.append(''.join([seq[i], seq[i + 1], seq[i + 2],seq[i+3],seq[i+4],seq[i+5],seq[i+6],seq[i+7],seq[i+8]]))
+    return record
+
+
+def predict_gap(range_path,co,genome,model,scale): #看每个基因预测值与实际值的差距
+    gene = list(set(co['gene'].to_list()))
+    res = {}
+    for i in gene:
+        count = co[co['gene'] == i].shape[0]
+        seq = get_seq(i, range_path, genome)
+        if seq:
+            pro = analyze(seq, model)
+            count = get_gene(i,co,range_path)
+            predict = sum(pro)*scale
+            c = sum(count)
+            if c > 4:
+                print((predict-c)/c)
+                res[i] = (c-predict)/predict
+                print(i + ' done')
+    return res
