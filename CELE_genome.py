@@ -7,7 +7,7 @@ import genetorch as gt
 import numpy as np
 import seaborn as sns
 from collections import Counter
-
+import random
 matplotlib.use('TkAgg')
 
 
@@ -875,6 +875,8 @@ def block_mut_co_5(co, genome, length, comb):
         c = genome[k]
         for i in range(int(21000000) // int(length)):
             start = i * length
+            if start > len(genome[k]):
+                break
             end = start + length
             block = {}
             for j in range(len(chrom)):
@@ -889,7 +891,7 @@ def block_mut_co_5(co, genome, length, comb):
     return res
 
 
-def standard_mut_block_5(genome, length, standard_rate, comb):
+def standard_mut_block_5(genome, length, standard_rate, comb,scale):
     split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
     for k, v in genome.items():
         for i in range(int(21000000) // int(length)):
@@ -902,9 +904,9 @@ def standard_mut_block_5(genome, length, standard_rate, comb):
                 for i in range(len(at) - 4):
                     code = ''.join([at[i], at[i + 1], at[i + 2],at[i+3],at[i+4]])
                     if code not in a.keys():
-                        a[code] = standard_rate[code]
+                        a[code] = standard_rate[code]*scale
                     else:
-                        a[code] += standard_rate[code]
+                        a[code] += standard_rate[code]*scale
                 fill_comb(comb, a)
                 split[k].append(a)
             else:
@@ -1155,4 +1157,17 @@ def predict_gap(range_path,co,genome,model,scale): #看每个基因预测值与�
                 print((predict-c)/c)
                 res[i] = (c-predict)/predict
                 print(i + ' done')
+    return res
+
+
+def get_polII(polII_path,genome):  #读取polII均值文件
+    with open(polII_path, 'r') as f:
+        m = f.readlines()
+        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']), 'IV': [0] * len(genome['IV']),
+               'V': [0] * len(genome['V']), 'X': [0] * len(genome['X'])}
+        for i in m:
+            if i[0] != 't' and i[0] != '#' and i[0] != 'M':
+                n = i.split('\n')[0].split('\t')
+                for k in range((int(n[1]) - 1), (int(n[2]) - 1), 1):
+                    res[n[0]][k] = n[3]
     return res
