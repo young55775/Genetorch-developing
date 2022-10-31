@@ -1170,4 +1170,54 @@ def get_polII(polII_path,genome):  #读取polII均值文件
                 n = i.split('\n')[0].split('\t')
                 for k in range((int(n[1]) - 1), (int(n[2]) - 1), 1):
                     res[n[0]][k] = n[3]
+    for k in res:
+        res[k] = [int(n) for n in res[k]]
     return res
+
+
+
+def get_wig(wig_path,genome,step):
+    error = []
+    with open(wig_path, 'r') as f:
+        m = f.readlines()
+        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']), 'IV': [0] * len(genome['IV']),
+               'V': [0] * len(genome['V']), 'X': [0] * len(genome['X']),'MtDNA':[0]*len(genome['MtDNA'])}
+        for i in m:
+            if i[0] != 't' and i[0] != '#' and i[0] != 'M':
+                if i[0] == 'v':
+                    try:
+                        key = i.split('chrom=chr')[1].split(' ')[0]
+                    except:
+                        key = 'MtDNA'
+                else:
+                    n = i.split('\n')[0].split('\t')
+                    start = int(n[0])-1
+                    try:
+                        for k in range(start,start+step):
+                            res[key][k] = n[1]
+                    except:
+                        error.append(key)
+    del res['MtDNA']
+    for k in res:
+        res[k] = [float(n) for n in res[k]]
+    return res
+
+
+
+def heatmap_pol(polII_path,wig_path,genome,length):
+    if polII_path:
+        res = get_polII(polII_path,genome)
+    if wig_path:
+        res = get_wig(wig_path,genome,step=10)
+    map = {}
+    for k in res.keys():
+        if k not in map.keys():
+            map[k] = []
+        while len(res[k]) < 21000000:
+            res[k].append(0)
+        for i in range(0,len(res[k]),length):
+            start = i
+            end = i+length
+            map[k].append(sum(res[k][start:end])/length)
+    heat_map_dict(map)
+    return map
