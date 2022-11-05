@@ -1221,3 +1221,4 @@ def heatmap_pol(polII_path,wig_path,genome,length):
             map[k].append(sum(res[k][start:end])/length)
     heat_map_dict(map)
     return map
+
