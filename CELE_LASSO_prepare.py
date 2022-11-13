@@ -75,6 +75,14 @@ def cal_dist(lst):
             start = i
     return np.mean(dist)
 
+def ave_lst(lst,scale): #以100为单位作平均值
+    new = []
+    ori = len(lst)
+    for i in range(len(lst)-(scale-1)):
+        new.append(np.mean(lst[i:i+scale]))
+    while len(new) < ori:
+        new.append(0)
+    return new
 #1.计算间距均值
 #2.使用均值，mean=0.5，sigma=0.15画正态曲线叠加
 
@@ -82,6 +90,7 @@ def preprocess(lst): #总流程，不改变参数的情况下调用这个函数�
     mean = cal_dist(lst)
     seed = norm_unit(mean)
     res = smooth_lst(lst,seed)
+    ave_lst(lst,100)
     return res
 
 #1.读取wig文件，在readwig函数上加以改动
@@ -127,12 +136,15 @@ def read_wig_sny_float(file_path,genome,chrom):
         m = f.readlines()
         data = [0] * len(genome[chrom])
         for k in m:
-            if k[0] == chrom:
-                i = k.split('\n')[0].split('\t')
+            i = k.split('\n')[0].split('\t')
+            if i[0] == chrom:
                 start = int(i[1])
                 end = int(i[2])
                 for n in range(start, end):
-                    data[n] = float(i[3])
+                    try:
+                        data[n] = float(i[3])
+                    except:
+                        print(i)
     return data
 
 def mean_sny_float(lst,genome,chrom): #lst内放置成组的sny实验室的文件名，输出平均值
@@ -140,9 +152,11 @@ def mean_sny_float(lst,genome,chrom): #lst内放置成组的sny实验室的文�
     for i in lst:
         data.append(read_wig_sny_float(i,genome,chrom))
     data = np.asarray(data)
-    return np.mean(data,axis = 0)
+    data = list(np.mean(data,axis=0))
+    data = ave_lst(data,100)
+    return data
 
-def read_wig_single(file_path,genome,chrom,splitkw,span): #读取只记录一个点信息的wig，并smooth化
+def read_wig_single(file_path,genome,chrom,splitkw): #读取只记录一个点信息的wig，并smooth化
     with open('training_datas\\' + file_path, 'r') as f:
         m = f.readlines()
         data = [0] * len(genome[chrom])
@@ -159,26 +173,35 @@ def read_wig_single(file_path,genome,chrom,splitkw,span): #读取只记录一个
             if start:
                 if k[0] != 'v' and k[0] != '#':
                     con = k.split('\n')[0].split('\t')
-                    for i in range(int(con[0])-span-1,int(con[0])+span):
-                        data[i] = float(con[1])
-    return data
+                    try:
+                        data[int(con[0])-1] += float(con[1])
+                    except:
+                        print(con)
+    return preprocess(data)
 
 
-def mean_single_float(lst,genome,chrom,splitkw,span): #lst内放置成组的single_wig的文件名，输出平均值
+def mean_single_float(lst,genome,chrom,splitkw): #lst内放置成组的single_wig的文件名，输出平均值
     data = []
     for i in lst:
-        data.append(read_wig_single(i,genome,chrom,splitkw,span))
+        data.append(read_wig_single(i,genome,chrom,splitkw))
     data = np.asarray(data)
     return list(np.mean(data,axis = 0))
 
-import numpy as np
-import winreg
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import ElasticNet###导入岭回归算法
-from sklearn.metrics import r2_score
-train=whole.drop(["mutation_factor"],axis=1)
-X_train,X_test,y_train,y_test=train_test_split(train,whole["mutation_factor"],test_size = 0.2,random_state=1)
-net = ElasticNet(alpha = 0.1,max_iter = 10000000)
-net.fit(X_train,y_train)
-print("训练模型得分："+str(r2_score(y_train,net.predict(X_train))))#训练集
-print("待测模型得分："+str(r2_score(y_test,net.predict(X_test))))#待测集
+def save(name,res):
+    data = []
+    for i in res.values():
+        data.extend(i)
+    if len(data) == 100272607:
+        data = pd.DataFrame(data, columns=[name])
+        data.to_csv('full dataset\\{}.csv'.format(name), index=False)
+    else:
+        print(name)
+
+
+try:
+    res = {}
+    for i in chrom:
+        res[i] = mean_single_float(['GSM1255289_SDQ0804_HCP3_N2_LTEMB_1_MA2Cscore.wig'],genome,i,'chrom=chr')
+    save('HCP3_LTEMB',res)
+except:
+    print('oh my god')
