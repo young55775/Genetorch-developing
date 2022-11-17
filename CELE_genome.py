@@ -180,7 +180,7 @@ def match(genome, comb):
 
 
 # I:15072434    II:15279421 III:13783801    IV:17493829 V:20924180  X:17718942  Mt:13794
-def region_freq(co_data, n):
+def region_freq(co_data, n,block):
     record_dict = {}
     chrom = co_data['chrom'].to_list()
     pos = co_data['pos'].to_list()
@@ -189,10 +189,10 @@ def region_freq(co_data, n):
     for i in group:
         if i[0] != 'MtDNA':
             if i[0] not in record_dict.keys():
-                record_dict[i[0]] = [0] * 420
+                record_dict[i[0]] = [0] * block
             else:
                 try:
-                    ind = int(i[1]) // 50000
+                    ind = int(i[1]) // n
                     record_dict[i[0]][ind] += 1 / n
                 except:
                     error.append(i)
@@ -921,6 +921,10 @@ def analyze(seq,model): #输入5碱基的突变频率，预测整个基因的突
             pro.append(model[code])
         else:
             pro.append(0)
+    pro.insert(0,0)
+    pro.insert(0,0)
+    pro.insert(-1,0)
+    pro.insert(-1,0)
     return pro
 
 

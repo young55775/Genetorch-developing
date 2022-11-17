@@ -46,11 +46,12 @@ def find_gene(OutLier, range_path):
     i = 0
     j = 0
     for i in range(len(start)):
-        if start[i] <= OutLier.relative_pos:
+        if start[i] > OutLier.relative_pos:
             break
     for j in range(len(end)):
         if end[j] >= OutLier.relative_pos:
             break
+    i -= 1
     if i == j:
         return name[i]
     else:
@@ -59,12 +60,10 @@ def find_gene(OutLier, range_path):
 
 def find_outlier(file_path, range_path):
     out = pd.read_csv(file_path)
-    pos = out['Unnamed: 0'].to_list()
+    pos = out['out'].to_list()
     res = []
     gene = []
     for i in pos:
         gene.append(find_gene(OutLier(i), range_path))
     return gene
 
-if __name__ == '__main__':
-    lst = find_outlier()
