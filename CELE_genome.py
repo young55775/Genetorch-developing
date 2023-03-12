@@ -3,12 +3,12 @@ import io
 import os
 import matplotlib
 import matplotlib.pyplot as plt
-import genetorch as gt
+# import genetorch as gt
 import numpy as np
 import seaborn as sns
 from collections import Counter
 import random
-matplotlib.use('TkAgg')
+# matplotlib.use('TkAgg')
 
 
 # with open(r"C:\Users\guozh\Desktop\GCF_000002985.6_WBcel235_genomic.fna", 'r') as f:
@@ -1226,3 +1226,18 @@ def heatmap_pol(polII_path,wig_path,genome,length):
     heat_map_dict(map)
     return map
 
+def sum_lst(lst,scale):
+    nlst = []
+    for i in range(0,len(lst),scale):
+        nlst.append(sum(lst[i:i+scale]))
+    return nlst
+
+def chrom_spliter(pred):
+    res = {}
+    res['I'] = pred[0:15072434]
+    res['II'] = pred[15072434:30351855]
+    res['III'] = pred[30351855:44135656]
+    res['IV'] = pred[44135656:61629485]
+    res['V'] = pred[61629485:82553665]
+    res['X'] = pred[82553665:]
+    return res
