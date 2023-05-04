@@ -25,8 +25,8 @@ def simp_file(raw_df):
         b.append(row['INFO'].split('|'))
     c = []
     for i in range(len(b)):
-        c.append([b[i][3], b[i][4], b[i][1], b[i][9], b[i][10]])
-    genelist = pd.DataFrame(c, columns=['gene', 'ID', 'type', 'base', 'protein'])
+        c.append([b[i][3], b[i][4], b[i][1], b[i][9], b[i][10],b[i][7]])
+    genelist = pd.DataFrame(c, columns=['gene', 'ID', 'type', 'base', 'protein','transcript'])
     return genelist
 
 
