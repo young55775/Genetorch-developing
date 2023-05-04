@@ -6,3 +6,5 @@ from genetorch import genelist
 # from genetorch import wormbase
 from genetorch import pcluster
 from genetorch import apf
+from genetorch import regression
+from genetorch import preprocess

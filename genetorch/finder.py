@@ -40,8 +40,9 @@ def get(co_data):
     return result
 
 
-def filter(a, lengthlimit=0.6, rid=['ttn-1', 'cla-1']):
-    reader.get_impact(a)
+def filter(a, lengthlimit=8, rid=['ttn-1', 'cla-1'],impact = True):
+    if impact:
+        reader.get_impact(a)
     conc = pd.DataFrame()
     for i in range(len(a.taglist)):
         conc = pd.concat([conc, a.taglist[i]])
