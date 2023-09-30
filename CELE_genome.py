@@ -8,6 +8,7 @@ import numpy as np
 import seaborn as sns
 from collections import Counter
 import random
+
 # matplotlib.use('TkAgg')
 
 
@@ -23,8 +24,94 @@ import random
 #         genome[key] += i.split('\n')[0]
 # print('done')
 
-comb_5 = ["GCCAC","TACCT","CCCCC","AACAG","TCTCC","CCCTG","ATCTT","AGTGC","TCCTT","TTCTT","CACCC","CCCCA","AGCCT","CGAAA","AATAA","CCACC","GATTT","TTCCA","AACTT","TTCCC","ATTCT","TTGTG","TTCGA","TGCTT","ATGCA","ACCAT","TCCCG","CTCAT","CTTTC","TTTAG","CTCTT","GCCCG","AGCAC","CTCTC","ACCAC","AGCTG","TTCTC","ATCCT","TGTGT","CCCCT","AACCC","CTCCA","TTCCG","TTCAA","TGCAA","ATCAG","ACTGC","TTCCT","ATCGC","TGCTG","GTTGG","TTGCG","GACAA","AAAAA","AAAAT","TCACC","ATTAA","TGCGG","GGTTT","TGGAT","GAGTA","GAGTG","ATGAG","CTGAT","AACAA","ACGCA","TTGTC","TTTCA","TCGAA","CGGAA","GGGGG","CATTG","GAGAA","GGGGT","TAGGT","AGGCA","CAGAG","GCGCC","AGGGG","GGGCG","AAGGT","CTGAA","GCGTG","AAACT","AAGAA","AAGGA","CAGCA","AAGCT","AAGCA","TAGTA","GAGAG","GTGCA","CCGTG","TAGAG","AAGAG","GAGGA","ACGGT","TGATA","TGATT","ATGAT","AAGGG","TGGGT","TAGGC","AGGGA","TCGCC","GTCGA","TCGAT","TTGAA","TCGCA","AGGAG","GCGGT","ACGCT","GTGCG","ATGTG","GGGAC","TGGAA","TTTCC","GCCCT","TTCTG","TGCGT","AACTG","CACAT","TGCAT","CACCG","GACTC","CACGA","CCCAT","TCCAA","CGCCG","GGCAC","CGTAC","GACGA","TTCAT","GCCGG","TCCTC","ATCGA","TGCGA","TACTC","ATCAC","ACCTA","AGCGA","CGCCC","ACCTT","CGCCA","AGCTT","AACAT","TTCTA","AACAC","ACCAA","CTCGC","GACCA","CCCCG","ACCTC","TGCCG","AGCGT","GCCGC","GTCTC","CCCGC","GACTT","TCCGG","TCCAT","ATGTT","GCCGA","CGCGA","CACCA","CTCGA","AGCGG","GCTTC","AACTC","CAAGG","TGGGG","AACCT","CAGAA","ATAGC","GTCGG","ACCTG","AGCAT","GTAGT","GTAGA","AAATG","AGTGG","AGGAA","GTGAA","ATGTA","AAGTT","CTGTT","GCGAA","GGGCA","GTGTA","CCGCA","ATACT","TGGTA","CGGAT","CGGCG","TTGCT","TACAT","GTGAT","TCGGT","TAGCC","CGGGA","CTCGT","CCGGG","GAGAC","TTTGC","TTGAT","AAGAT","GAGCG","CGGTT","CTGCC","AAGTC","ACGAA","ATATT","GGGTA","AGGTA","TCGCT","TTGGA","GAGCA","TAGAT","CGGTA","CCGGA","GCACC","TGGTT","CAGCT","TAGAA","ACGCG","GAGGT","GCGCT","TTGTT","TGGAG","ACGGG","TGGCA","GTGTC","CGGGG","AGGCT","TCGCG","CGGGT","TTGAC","AATCA","TTGAG","CCGAA","AGGCC","CCGCT","TTATG","GTGCT","CAGTA","CCAAG","TGGTG","ATGCT","GGGAG","TCGTT","TCGTA","TTGGG","GCGCA","GAGTT","GGGTG","GATAT","GGAGA","CAGAT","AAATA","AGGCG","ACGTG","ACGTA","ATAGT","TAGTT","TGCAC","AGTCT","ATCCG","AGCAG","GATAA","GCCAG","CCCGT","AGCTC","TGCTA","CACTT","TCCAG","CACAA","CCCTC","TACCG","GCAAC","TGCCT","GACCT","TCCGT","CACTG","GCCAT","GCCCC","CGCCT","ATCTG","ACCCC","ATAAT","TCCGA","CGCAC","ATCGT","CTCCG","TACAA","TGCCA","TAATA","TTCAG","AAACG","TCCCC","AACCA","AGCCA","TCCCT","GTCTG","TCCGC","CGCGT","AGGAT","CTGCG","CGCAT","TATTT","CTCTA","TGACA","AAAGG","CATAC","CATAT","TGCTC","AGTCC","CACGC","GGCAA","TCATC","GACAT","CGATT","GTCCT","TTTAA","TCTGG","CTGGA","CTGGT","GTGGT","GGGAT","TTGCA","AGTTT","TTACT","CATCC","GTTAT","CGGCT","AGGTC","TAGGA","CCCTT","ACGAC","AGGGT","TCGAG","GAGAT","CAGGG","AATTT","TTAGG","GGCCA","GGCGA","TTAAA","GGATG","TTAGT","GTCAG","ATGTC","CTGAG","CTGTG","CAGGT","CGAGA","CAACC","GTGGA","CACTC","TACTG","ATCAT","GACGT","GTAAA","TTCGC","ATCCA","TACGC","TACAG","ATTCC","CGCAA","GAGCT","AAGAC","GGATT","TTTTC","CTCCC","AATGA","AAATT","ATCTC","CCCAG","CGCTC","TTCGT","ACTAT","CGCTT","CGCAG","GCCTG","TTTGA","CCCTA","CACAC","GGCTG","TACCA","ATCAA","CACTA","CGTCA","ACCCG","GCCAA","ACCGG","TGAAA","AGATT","CACCT","GTCCC","GCGCG","TACCC","ACTGA","ACTTT","TGCCC","CTGTA","CCCGA","AATAC","TGAAT","ACGAG","ATCGG","TATCC","GCCTA","AGCGC","CTCAC","TACGG","TTGCC","GGAGG","GCGTA","GAGTC","TTGTA","GCATT","CAGTG","TAAAT","CTGCA","CTGTC","GTGAG","CTGAC","TGAAG","TGGGA","GGAGC","GTGTG","TCTAA","CTACA","CGATA","ACATT","GGGAA","GGGGA","CAGGA","ATGCC","AATCC","CCGGT","ATGAA","CGGCA","CAGTT","GGTCG","CTCTG","GGCAT","AGCCC","CTCCT","ATATA","AATTA","ATCTA","TACTT","GGCTT","ATTGT","ACAAT","CTATA","GGGTT","GTCCA","CTCAG","GTCTA","TTAAG","TAAAA","TTTTT","CTGGG","CTTAA","CTTCC","ATCCC","TCGTC","AATGT","AATGG","TCATA","ACCGT","CGCTA","ATAGG","CTTGA","GTACC","GTATT","AATCG","TCCTG","TGGCC","CAATT","TAGCT","ATGGC","GTGCC","CAGCG","ATTTT","ACACC","AAGGC","AGTGT","AAATC","GAGCC","GGGCT","ACGAT","AAGTA","CCGAT","CAGTC","AATAT","GCATG","TTGGT","ATGCG","TAGAC","CAGAC","AAGTG","CGGTG","TCAAT","TTTGT","GCGGC","CCGCC","ATGAC","CCATA","TAGTG","ATTTG","AGCAA","CTAGG","CATCA","GTCAC","TGTGC","TGTGA","TGACT","CGCGG","TTATC","GCCTT","GGTAT","CGCTG","ACCCT","TGTTG","AATAG","GAAAC","ACCCA","GACTA","GTCAT","GTGTT","GTCTT","GTAGG","TGCGC","CTCAA","ACCAG","ACCGC","CCTCC","ATTCA","TATGC","TATAG","AACGT","TTCAC","TGTAG","CCCAA","GCGAT","GCTGC","TCAAC","TCTTT","GGACC","CATTC","CCAGC","AAAGA","CCGTT","TCGGA","TAGCA","TGGCG","CCATT","AGGTT","TAGGG","GGTGA","GAAGG","TCAAA","AAACA","CGGAG","AACCG","GCATA","AGATC","ATTTA","TTACC","CGTGG","GGCCC","CCAGA","GGCTC","TGCAG","AGCCG","ACTGG","ATTAT","GTTTG","CCCAC","AACGG","GCTTT","TAAGG","TCCCA","ATTAG","CTACC","CGTTA","ATACC","GAAAA","CTATT","TTTAC","TAAAC","CCGAG","GCTCC","GTATC","GAGGC","TCAGA","TTTTG","TTAGC","GGTGC","CTGGC","TCTAG","TATTC","TCTTA","GCAGC","GAACT","AAAAC","CAAAT","TAAGC","AGATA","GTTTA","AACTA","TGTAA","CACAG","AGAAA","TCCAC","CGCGC","TTTGG","TCATT","TTAGA","TGTTA","CCGTA","CGGCC","ATTGG","TTTTA","TCCTA","CACGT","TTTAT","GGCAG","CCTGT","GCGGA","ACGTT","TTGGC","GACAC","CGGAC","GACCC","TATAT","GTCGC","GCCCA","CAGCC","AAAGT","AAGCC","CGAGG","AAAGC","AGGTG","ATGGA","ACGCC","AGGGC","TAATG","TCTAC","AGGAC","CTACT","GCGAG","GTATG","TAACA","AGAAT","TTTCT","AGTAC","GAATA","TCGGG","TTATT","ACAGA","GAATT","GTCGT","GTCCG","CGTGA","TGTCT","TCTCA","AGTCA","AATTC","GAACC","GACTG","AGACA","GGCGT","GGCGC","CATGT","TGAGC","AGACG","GTACT","AGTAA","CCAAT","ATAGA","TCACG","GACGG","GTTCC","TTATA","GTCAA","ACGGA","CAAAA","TCAAG","GATTA","TTACG","TGGTC","AAGCG","GCAGT","CAAAC","GTGAC","CCGAC","GACGC","TGAGT","GGCTA","TACTA","TTCGG","CCCGG","GGAGT","ACAAC","TCTCT","AACGC","CATTT","GCTAC","CAGGC","CGTTT","ACTCC","TGTCC","CTGCT","GAGGG","TAGCG","CGATG","TAATT","AGACT","GTGGC","CCACT","TCAGT","GATCC","TGAGA","GTTTT","CGAAT","GCGGG","GGGGC","ATACA","GATGG","TACAC","GACCG","TCTGT","AATCT","TGTAT","GCTGA","ACAGG","GCAAT","AGAGG","GGGTC","GCGTT","TATTA","TGTTT","ATGGG","TCACA","GGTAA","ATTTC","CAAGT","TATAA","GATAC","CATTA","ACTAA","AGTAT","CTTCG","TGGAC","TCAGG","CGACT","TCTCG","AGACC","ATTGA","TCGTG","AGTTC","CTAGT","AAACC","AATTG","TGTGG","AGCTA","TGAGG","ATTGC","TACGA","TGACC","TACGT","GGTGG","CATAA","GCACT","GTGGG","GAAGA","AAAAG","TCGAC","CGACC","GGACA","CCGTC","GGCCT","CGACG","TCTTG","GAAAT","CTAGA","GGAAT","GACAG","GTTGC","TATCT","AACGA","ACAGT","CTATG","TAACC","GTTGA","CCGCG","CTCGG","TTAAT","TAGTC","CCGGC","GATGA","CGTCG","ACGTC","CCTGG","ATGGT","ATTAC","GTATA","CAATG","ACATA","TATGA","GGCGG","ACACT","ATAAA","CCACA","CGTAT","GGTCA","GGAAG","GCTGT","TGGCT","AGATG","TATCA","CAATA","AGTTG","ACATG","CACGG","GCCTC","TGATG","TGGGC","ACAGC","CCTTC","GCACA","TCGGC","CGGGC","GCCGT","TGTCA","TTACA","ACAAA","CAAAG","CGGTC","TCTAT","GGGCC","CTTCA","GAACG","GAAAG","GATTG","GCAAG","TGTTC","CCTTG","GCAGA","TCTGA","TGACG","GCAAA","ACCGA","GTACA","GAATC","GATCT","AGTGA","TATGT","GCTGG","ACTTA","ATATG","TGTCG","TGTAC","AGTCG","AATGC","TATTG","ATATC","CTTGG","CCTCA","GCGTC","ATAAC","CGTGT","CCTTT","CCTCG","TCACT","AGTAG","CCAGT","TAATC","GGAAC","CAATC","CCTAG","CTAAA","TATGG","GAATG","GTTGT","GGACG","CATAG","AGAAG","CCAAA","CCTAA","TATAC","CAAGA","CTTTG","CGACA","CGATC","GCATC","GTTAA","CCTAC","ACTAG","CCAAC","AGTTA","ACTCA","GGAAA","ACACG","ACGGC","GTTCT","GGCCG","GTAAT","CTTTT","GCTCA","ACTAC","GCGAC","CAAGC","TTAAC","CCATC","GTTTC","TCTGC","ACAAG","CTTAT","CATCG","GAACA","CAACA","CTTTA","TGAAC","TCATG","GCAGG","ATAAG","CGTTG","GGTGT","GGTCC","CCAGG","TATCG","GCTTA","AGAGC","GAAGC","ACTTG","GGTTA","ATTCG","CATGA","GATTC","CGTGC","CCATG","CTTGT","CCTCT","CGAAG","CTATC","GTAAG","GCTCG","GTTCA","CCTAT","GTACG","GGATA","ACACA","GATGC","TCTTC","GGTCT","CGAGC","CATGG","CTAAT","GATCG","ACTCG","GTAAC","CTAAC","GGTTG","CAACG","CTTCT","TAAGA","TAACG","CATCT","GATAG","GCTAA","GTTAG","CGTAG","TAAAG","CTTAC","GGATC","ACTGT","CGTAA","GAAGT","CTAGC","GGTAG","CCACG","GATGT","ACTTC","GGACT","CATGC","GGTTC","TTTCG","CCTGA","GTTCG","GCTCT","CGTCC","GCTAT","GCACG","AGAAC","CTAAG","GTAGC","CAACT","CTACG","CGTCT","TCAGC","GGTAC","GCTTG","CTTGC","CTTAG","ACATC","CCTTA","CGTTC","GATCA","CGAGT","TAACT","TAAGT","GTTAC","CCTGC","TGATC","ACTCT","AGAGT","AGAGA","ATACG","CGAAC"
-]
+comb_5 = ["GCTAG","GCCAC", "TACCT", "CCCCC", "AACAG", "TCTCC", "CCCTG", "ATCTT", "AGTGC", "TCCTT", "TTCTT", "CACCC", "CCCCA",
+          "AGCCT", "CGAAA", "AATAA", "CCACC", "GATTT", "TTCCA", "AACTT", "TTCCC", "ATTCT", "TTGTG", "TTCGA", "TGCTT",
+          "ATGCA", "ACCAT", "TCCCG", "CTCAT", "CTTTC", "TTTAG", "CTCTT", "GCCCG", "AGCAC", "CTCTC", "ACCAC", "AGCTG",
+          "TTCTC", "ATCCT", "TGTGT", "CCCCT", "AACCC", "CTCCA", "TTCCG", "TTCAA", "TGCAA", "ATCAG", "ACTGC", "TTCCT",
+          "ATCGC", "TGCTG", "GTTGG", "TTGCG", "GACAA", "AAAAA", "AAAAT", "TCACC", "ATTAA", "TGCGG", "GGTTT", "TGGAT",
+          "GAGTA", "GAGTG", "ATGAG", "CTGAT", "AACAA", "ACGCA", "TTGTC", "TTTCA", "TCGAA", "CGGAA", "GGGGG", "CATTG",
+          "GAGAA", "GGGGT", "TAGGT", "AGGCA", "CAGAG", "GCGCC", "AGGGG", "GGGCG", "AAGGT", "CTGAA", "GCGTG", "AAACT",
+          "AAGAA", "AAGGA", "CAGCA", "AAGCT", "AAGCA", "TAGTA", "GAGAG", "GTGCA", "CCGTG", "TAGAG", "AAGAG", "GAGGA",
+          "ACGGT", "TGATA", "TGATT", "ATGAT", "AAGGG", "TGGGT", "TAGGC", "AGGGA", "TCGCC", "GTCGA", "TCGAT", "TTGAA",
+          "TCGCA", "AGGAG", "GCGGT", "ACGCT", "GTGCG", "ATGTG", "GGGAC", "TGGAA", "TTTCC", "GCCCT", "TTCTG", "TGCGT",
+          "AACTG", "CACAT", "TGCAT", "CACCG", "GACTC", "CACGA", "CCCAT", "TCCAA", "CGCCG", "GGCAC", "CGTAC", "GACGA",
+          "TTCAT", "GCCGG", "TCCTC", "ATCGA", "TGCGA", "TACTC", "ATCAC", "ACCTA", "AGCGA", "CGCCC", "ACCTT", "CGCCA",
+          "AGCTT", "AACAT", "TTCTA", "AACAC", "ACCAA", "CTCGC", "GACCA", "CCCCG", "ACCTC", "TGCCG", "AGCGT", "GCCGC",
+          "GTCTC", "CCCGC", "GACTT", "TCCGG", "TCCAT", "ATGTT", "GCCGA", "CGCGA", "CACCA", "CTCGA", "AGCGG", "GCTTC",
+          "AACTC", "CAAGG", "TGGGG", "AACCT", "CAGAA", "ATAGC", "GTCGG", "ACCTG", "AGCAT", "GTAGT", "GTAGA", "AAATG",
+          "AGTGG", "AGGAA", "GTGAA", "ATGTA", "AAGTT", "CTGTT", "GCGAA", "GGGCA", "GTGTA", "CCGCA", "ATACT", "TGGTA",
+          "CGGAT", "CGGCG", "TTGCT", "TACAT", "GTGAT", "TCGGT", "TAGCC", "CGGGA", "CTCGT", "CCGGG", "GAGAC", "TTTGC",
+          "TTGAT", "AAGAT", "GAGCG", "CGGTT", "CTGCC", "AAGTC", "ACGAA", "ATATT", "GGGTA", "AGGTA", "TCGCT", "TTGGA",
+          "GAGCA", "TAGAT", "CGGTA", "CCGGA", "GCACC", "TGGTT", "CAGCT", "TAGAA", "ACGCG", "GAGGT", "GCGCT", "TTGTT",
+          "TGGAG", "ACGGG", "TGGCA", "GTGTC", "CGGGG", "AGGCT", "TCGCG", "CGGGT", "TTGAC", "AATCA", "TTGAG", "CCGAA",
+          "AGGCC", "CCGCT", "TTATG", "GTGCT", "CAGTA", "CCAAG", "TGGTG", "ATGCT", "GGGAG", "TCGTT", "TCGTA", "TTGGG",
+          "GCGCA", "GAGTT", "GGGTG", "GATAT", "GGAGA", "CAGAT", "AAATA", "AGGCG", "ACGTG", "ACGTA", "ATAGT", "TAGTT",
+          "TGCAC", "AGTCT", "ATCCG", "AGCAG", "GATAA", "GCCAG", "CCCGT", "AGCTC", "TGCTA", "CACTT", "TCCAG", "CACAA",
+          "CCCTC", "TACCG", "GCAAC", "TGCCT", "GACCT", "TCCGT", "CACTG", "GCCAT", "GCCCC", "CGCCT", "ATCTG", "ACCCC",
+          "ATAAT", "TCCGA", "CGCAC", "ATCGT", "CTCCG", "TACAA", "TGCCA", "TAATA", "TTCAG", "AAACG", "TCCCC", "AACCA",
+          "AGCCA", "TCCCT", "GTCTG", "TCCGC", "CGCGT", "AGGAT", "CTGCG", "CGCAT", "TATTT", "CTCTA", "TGACA", "AAAGG",
+          "CATAC", "CATAT", "TGCTC", "AGTCC", "CACGC", "GGCAA", "TCATC", "GACAT", "CGATT", "GTCCT", "TTTAA", "TCTGG",
+          "CTGGA", "CTGGT", "GTGGT", "GGGAT", "TTGCA", "AGTTT", "TTACT", "CATCC", "GTTAT", "CGGCT", "AGGTC", "TAGGA",
+          "CCCTT", "ACGAC", "AGGGT", "TCGAG", "GAGAT", "CAGGG", "AATTT", "TTAGG", "GGCCA", "GGCGA", "TTAAA", "GGATG",
+          "TTAGT", "GTCAG", "ATGTC", "CTGAG", "CTGTG", "CAGGT", "CGAGA", "CAACC", "GTGGA", "CACTC", "TACTG", "ATCAT",
+          "GACGT", "GTAAA", "TTCGC", "ATCCA", "TACGC", "TACAG", "ATTCC", "CGCAA", "GAGCT", "AAGAC", "GGATT", "TTTTC",
+          "CTCCC", "AATGA", "AAATT", "ATCTC", "CCCAG", "CGCTC", "TTCGT", "ACTAT", "CGCTT", "CGCAG", "GCCTG", "TTTGA",
+          "CCCTA", "CACAC", "GGCTG", "TACCA", "ATCAA", "CACTA", "CGTCA", "ACCCG", "GCCAA", "ACCGG", "TGAAA", "AGATT",
+          "CACCT", "GTCCC", "GCGCG", "TACCC", "ACTGA", "ACTTT", "TGCCC", "CTGTA", "CCCGA", "AATAC", "TGAAT", "ACGAG",
+          "ATCGG", "TATCC", "GCCTA", "AGCGC", "CTCAC", "TACGG", "TTGCC", "GGAGG", "GCGTA", "GAGTC", "TTGTA", "GCATT",
+          "CAGTG", "TAAAT", "CTGCA", "CTGTC", "GTGAG", "CTGAC", "TGAAG", "TGGGA", "GGAGC", "GTGTG", "TCTAA", "CTACA",
+          "CGATA", "ACATT", "GGGAA", "GGGGA", "CAGGA", "ATGCC", "AATCC", "CCGGT", "ATGAA", "CGGCA", "CAGTT", "GGTCG",
+          "CTCTG", "GGCAT", "AGCCC", "CTCCT", "ATATA", "AATTA", "ATCTA", "TACTT", "GGCTT", "ATTGT", "ACAAT", "CTATA",
+          "GGGTT", "GTCCA", "CTCAG", "GTCTA", "TTAAG", "TAAAA", "TTTTT", "CTGGG", "CTTAA", "CTTCC", "ATCCC", "TCGTC",
+          "AATGT", "AATGG", "TCATA", "ACCGT", "CGCTA", "ATAGG", "CTTGA", "GTACC", "GTATT", "AATCG", "TCCTG", "TGGCC",
+          "CAATT", "TAGCT", "ATGGC", "GTGCC", "CAGCG", "ATTTT", "ACACC", "AAGGC", "AGTGT", "AAATC", "GAGCC", "GGGCT",
+          "ACGAT", "AAGTA", "CCGAT", "CAGTC", "AATAT", "GCATG", "TTGGT", "ATGCG", "TAGAC", "CAGAC", "AAGTG", "CGGTG",
+          "TCAAT", "TTTGT", "GCGGC", "CCGCC", "ATGAC", "CCATA", "TAGTG", "ATTTG", "AGCAA", "CTAGG", "CATCA", "GTCAC",
+          "TGTGC", "TGTGA", "TGACT", "CGCGG", "TTATC", "GCCTT", "GGTAT", "CGCTG", "ACCCT", "TGTTG", "AATAG", "GAAAC",
+          "ACCCA", "GACTA", "GTCAT", "GTGTT", "GTCTT", "GTAGG", "TGCGC", "CTCAA", "ACCAG", "ACCGC", "CCTCC", "ATTCA",
+          "TATGC", "TATAG", "AACGT", "TTCAC", "TGTAG", "CCCAA", "GCGAT", "GCTGC", "TCAAC", "TCTTT", "GGACC", "CATTC",
+          "CCAGC", "AAAGA", "CCGTT", "TCGGA", "TAGCA", "TGGCG", "CCATT", "AGGTT", "TAGGG", "GGTGA", "GAAGG", "TCAAA",
+          "AAACA", "CGGAG", "AACCG", "GCATA", "AGATC", "ATTTA", "TTACC", "CGTGG", "GGCCC", "CCAGA", "GGCTC", "TGCAG",
+          "AGCCG", "ACTGG", "ATTAT", "GTTTG", "CCCAC", "AACGG", "GCTTT", "TAAGG", "TCCCA", "ATTAG", "CTACC", "CGTTA",
+          "ATACC", "GAAAA", "CTATT", "TTTAC", "TAAAC", "CCGAG", "GCTCC", "GTATC", "GAGGC", "TCAGA", "TTTTG", "TTAGC",
+          "GGTGC", "CTGGC", "TCTAG", "TATTC", "TCTTA", "GCAGC", "GAACT", "AAAAC", "CAAAT", "TAAGC", "AGATA", "GTTTA",
+          "AACTA", "TGTAA", "CACAG", "AGAAA", "TCCAC", "CGCGC", "TTTGG", "TCATT", "TTAGA", "TGTTA", "CCGTA", "CGGCC",
+          "ATTGG", "TTTTA", "TCCTA", "CACGT", "TTTAT", "GGCAG", "CCTGT", "GCGGA", "ACGTT", "TTGGC", "GACAC", "CGGAC",
+          "GACCC", "TATAT", "GTCGC", "GCCCA", "CAGCC", "AAAGT", "AAGCC", "CGAGG", "AAAGC", "AGGTG", "ATGGA", "ACGCC",
+          "AGGGC", "TAATG", "TCTAC", "AGGAC", "CTACT", "GCGAG", "GTATG", "TAACA", "AGAAT", "TTTCT", "AGTAC", "GAATA",
+          "TCGGG", "TTATT", "ACAGA", "GAATT", "GTCGT", "GTCCG", "CGTGA", "TGTCT", "TCTCA", "AGTCA", "AATTC", "GAACC",
+          "GACTG", "AGACA", "GGCGT", "GGCGC", "CATGT", "TGAGC", "AGACG", "GTACT", "AGTAA", "CCAAT", "ATAGA", "TCACG",
+          "GACGG", "GTTCC", "TTATA", "GTCAA", "ACGGA", "CAAAA", "TCAAG", "GATTA", "TTACG", "TGGTC", "AAGCG", "GCAGT",
+          "CAAAC", "GTGAC", "CCGAC", "GACGC", "TGAGT", "GGCTA", "TACTA", "TTCGG", "CCCGG", "GGAGT", "ACAAC", "TCTCT",
+          "AACGC", "CATTT", "GCTAC", "CAGGC", "CGTTT", "ACTCC", "TGTCC", "CTGCT", "GAGGG", "TAGCG", "CGATG", "TAATT",
+          "AGACT", "GTGGC", "CCACT", "TCAGT", "GATCC", "TGAGA", "GTTTT", "CGAAT", "GCGGG", "GGGGC", "ATACA", "GATGG",
+          "TACAC", "GACCG", "TCTGT", "AATCT", "TGTAT", "GCTGA", "ACAGG", "GCAAT", "AGAGG", "GGGTC", "GCGTT", "TATTA",
+          "TGTTT", "ATGGG", "TCACA", "GGTAA", "ATTTC", "CAAGT", "TATAA", "GATAC", "CATTA", "ACTAA", "AGTAT", "CTTCG",
+          "TGGAC", "TCAGG", "CGACT", "TCTCG", "AGACC", "ATTGA", "TCGTG", "AGTTC", "CTAGT", "AAACC", "AATTG", "TGTGG",
+          "AGCTA", "TGAGG", "ATTGC", "TACGA", "TGACC", "TACGT", "GGTGG", "CATAA", "GCACT", "GTGGG", "GAAGA", "AAAAG",
+          "TCGAC", "CGACC", "GGACA", "CCGTC", "GGCCT", "CGACG", "TCTTG", "GAAAT", "CTAGA", "GGAAT", "GACAG", "GTTGC",
+          "TATCT", "AACGA", "ACAGT", "CTATG", "TAACC", "GTTGA", "CCGCG", "CTCGG", "TTAAT", "TAGTC", "CCGGC", "GATGA",
+          "CGTCG", "ACGTC", "CCTGG", "ATGGT", "ATTAC", "GTATA", "CAATG", "ACATA", "TATGA", "GGCGG", "ACACT", "ATAAA",
+          "CCACA", "CGTAT", "GGTCA", "GGAAG", "GCTGT", "TGGCT", "AGATG", "TATCA", "CAATA", "AGTTG", "ACATG", "CACGG",
+          "GCCTC", "TGATG", "TGGGC", "ACAGC", "CCTTC", "GCACA", "TCGGC", "CGGGC", "GCCGT", "TGTCA", "TTACA", "ACAAA",
+          "CAAAG", "CGGTC", "TCTAT", "GGGCC", "CTTCA", "GAACG", "GAAAG", "GATTG", "GCAAG", "TGTTC", "CCTTG", "GCAGA",
+          "TCTGA", "TGACG", "GCAAA", "ACCGA", "GTACA", "GAATC", "GATCT", "AGTGA", "TATGT", "GCTGG", "ACTTA", "ATATG",
+          "TGTCG", "TGTAC", "AGTCG", "AATGC", "TATTG", "ATATC", "CTTGG", "CCTCA", "GCGTC", "ATAAC", "CGTGT", "CCTTT",
+          "CCTCG", "TCACT", "AGTAG", "CCAGT", "TAATC", "GGAAC", "CAATC", "CCTAG", "CTAAA", "TATGG", "GAATG", "GTTGT",
+          "GGACG", "CATAG", "AGAAG", "CCAAA", "CCTAA", "TATAC", "CAAGA", "CTTTG", "CGACA", "CGATC", "GCATC", "GTTAA",
+          "CCTAC", "ACTAG", "CCAAC", "AGTTA", "ACTCA", "GGAAA", "ACACG", "ACGGC", "GTTCT", "GGCCG", "GTAAT", "CTTTT",
+          "GCTCA", "ACTAC", "GCGAC", "CAAGC", "TTAAC", "CCATC", "GTTTC", "TCTGC", "ACAAG", "CTTAT", "CATCG", "GAACA",
+          "CAACA", "CTTTA", "TGAAC", "TCATG", "GCAGG", "ATAAG", "CGTTG", "GGTGT", "GGTCC", "CCAGG", "TATCG", "GCTTA",
+          "AGAGC", "GAAGC", "ACTTG", "GGTTA", "ATTCG", "CATGA", "GATTC", "CGTGC", "CCATG", "CTTGT", "CCTCT", "CGAAG",
+          "CTATC", "GTAAG", "GCTCG", "GTTCA", "CCTAT", "GTACG", "GGATA", "ACACA", "GATGC", "TCTTC", "GGTCT", "CGAGC",
+          "CATGG", "CTAAT", "GATCG", "ACTCG", "GTAAC", "CTAAC", "GGTTG", "CAACG", "CTTCT", "TAAGA", "TAACG", "CATCT",
+          "GATAG", "GCTAA", "GTTAG", "CGTAG", "TAAAG", "CTTAC", "GGATC", "ACTGT", "CGTAA", "GAAGT", "CTAGC", "GGTAG",
+          "CCACG", "GATGT", "ACTTC", "GGACT", "CATGC", "GGTTC", "TTTCG", "CCTGA", "GTTCG", "GCTCT", "CGTCC", "GCTAT",
+          "GCACG", "AGAAC", "CTAAG", "GTAGC", "CAACT", "CTACG", "CGTCT", "TCAGC", "GGTAC", "GCTTG", "CTTGC", "CTTAG",
+          "ACATC", "CCTTA", "CGTTC", "GATCA", "CGAGT", "TAACT", "TAAGT", "GTTAC", "CCTGC", "TGATC", "ACTCT", "AGAGT",
+          "AGAGA", "ATACG", "CGAAC"]
+
+
 def search(df, col, kw):
     return df[col] == kw
 
@@ -144,8 +231,6 @@ def plot_dict(dict):
     plt.show()
 
 
-
-
 comb = ['ATG', 'AGT', 'GTA', 'GAT', 'TAG', 'TGA',
         'ACG', 'AGC', 'CAG', 'CGA', 'GAC', 'GCA',
         'TGC', 'TCG', 'GCT', 'GTC', 'CGT', 'CTG',
@@ -180,7 +265,7 @@ def match(genome, comb):
 
 
 # I:15072434    II:15279421 III:13783801    IV:17493829 V:20924180  X:17718942  Mt:13794
-def region_freq(co_data, n,block):
+def region_freq(co_data, n, block):
     record_dict = {}
     chrom = co_data['chrom'].to_list()
     pos = co_data['pos'].to_list()
@@ -748,7 +833,7 @@ def slide(seq):
 
 
 # 计算一个co内每个triple base的突变率
-def standard_rate(co, genome,scale):
+def standard_rate(co, genome, scale):
     chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
@@ -763,8 +848,8 @@ def standard_rate(co, genome,scale):
     re = {}
     for k in count.keys():
         val = count[k] / count_all[k]
-        re[k] = val/scale
-    return re,count,count_all
+        re[k] = val / scale
+    return re, count, count_all
 
 
 # 计算按照突变频率每300000bp内会有多少个什么类型的突变
@@ -839,7 +924,7 @@ def predict_var(std, mut):
 
 
 # 计算五连密码子
-def standard_rate_5(co, genome,scale):
+def standard_rate_5(co, genome, scale):
     chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
@@ -856,7 +941,7 @@ def standard_rate_5(co, genome,scale):
     re = {}
     for k in count.keys():
         val = count[k] / count_all[k]
-        re[k] = val/scale
+        re[k] = val / scale
     return re
 
 
@@ -891,7 +976,7 @@ def block_mut_co_5(co, genome, length, comb):
     return res
 
 
-def standard_mut_block_5(genome, length, standard_rate, comb,scale):
+def standard_mut_block_5(genome, length, standard_rate, comb, scale):
     split = {'I': [], 'II': [], 'III': [], 'IV': [], 'V': [], 'X': [], 'MtDNA': []}
     for k, v in genome.items():
         for i in range(int(21000000) // int(length)):
@@ -902,72 +987,77 @@ def standard_mut_block_5(genome, length, standard_rate, comb,scale):
                 at = v[start:end]
                 a = {}
                 for i in range(len(at) - 4):
-                    code = ''.join([at[i], at[i + 1], at[i + 2],at[i+3],at[i+4]])
+                    code = ''.join([at[i], at[i + 1], at[i + 2], at[i + 3], at[i + 4]])
                     if code not in a.keys():
-                        a[code] = standard_rate[code]*scale
+                        a[code] = standard_rate[code] * scale
                     else:
-                        a[code] += standard_rate[code]*scale
+                        a[code] += standard_rate[code] * scale
                 fill_comb(comb, a)
                 split[k].append(a)
             else:
                 break
     return split
 
-def analyze(seq,model): #输入5碱基的突变频率，预测整个基因的突变曲线
+
+def analyze(seq, model):  # 输入5碱基的突变频率，预测整个基因的突变曲线
     pro = []
-    for i in range(2,len(seq)-2):
-        code = ''.join([seq[i-2],seq[i-1],seq[i],seq[i+1],seq[i+2]])
+    for i in range(2, len(seq) - 2):
+        code = ''.join([seq[i - 2], seq[i - 1], seq[i], seq[i + 1], seq[i + 2]])
         if code in model.keys():
             pro.append(model[code])
         else:
             pro.append(0)
-    pro.insert(0,0)
-    pro.insert(0,0)
-    pro.insert(-1,0)
-    pro.insert(-1,0)
+    pro.insert(0, 0)
+    pro.insert(0, 0)
+    pro.insert(-1, 0)
+    pro.insert(-1, 0)
     return pro
 
 
-def get_seq(gene_name,range_path,genome): #获得seq的DNA序列，由于评分是从第三个碱基开始到倒数第三个碱基终止，各往前后多取两个碱基
-    with open(range_path,'r') as f: #例如start = 50， end = 60的情况，取genome[47:62],也就是从genome的第48位取到第62位，经过analyze函数后依旧是10的长度
+def get_seq(gene_name, range_path, genome):  # 获得seq的DNA序列，由于评分是从第三个碱基开始到倒数第三个碱基终止，各往前后多取两个碱基
+    with open(range_path,
+              'r') as f:  # 例如start = 50， end = 60的情况，取genome[47:62],也就是从genome的第48位取到第62位，经过analyze函数后依旧是10的长度
         m = f.readlines()
         for i in m:
             if i.split('\t')[0] == gene_name:
                 chrom = i.split('\t')[1]
-                start = int(i.split('\t')[2])-3
-                end = int(i.split('\t')[3])+1
-                seq = genome[chrom][start:end+1]
+                start = int(i.split('\t')[2]) - 3
+                end = int(i.split('\t')[3]) + 1
+                seq = genome[chrom][start:end + 1]
                 return seq
     return False
 
 
-def get_gene(gene_name,co,range_path): #从co中获取基因的突变信息
+def get_gene(gene_name, co, range_path):  # 从co中获取基因的突变信息
     gene = co[co['gene'] == gene_name]
     pos = gene['pos'].to_list()
-    with open(range_path, 'r') as f: #获得基因起点
+    with open(range_path, 'r') as f:  # 获得基因起点
         m = f.readlines()
         for i in m:
             if i.split('\t')[0] == gene_name:
                 start = int(i.split('\t')[2])
                 end = int(i.split('\t')[3])
                 length = end - start + 1
-    pos = [int(n) - start for n in pos] #第一位变成0
+    pos = [int(n) - start for n in pos]  # 第一位变成0
     plot = [0] * length
     for i in pos:
-        if 0< i - 1 < length - 1:
+        if 0 < i - 1 < length - 1:
             plot[i] += 1
     return plot
 
-def re(a): #阶乘
+
+def re(a):  # 阶乘
     m = 1
-    for i in range(1,a+1):
+    for i in range(1, a + 1):
         m *= i
     return m
 
-def combination(all,num): #求组合数
-    return re(all)/(re(num)*re(all-num))
 
-def evaluate(probability,count,scale): #评估一个位点的概率
+def combination(all, num):  # 求组合数
+    return re(all) / (re(num) * re(all - num))
+
+
+def evaluate(probability, count, scale):  # 评估一个位点的概率
     if len(probability) != len(count):
         raise (ValueError)
     else:
@@ -975,18 +1065,18 @@ def evaluate(probability,count,scale): #评估一个位点的概率
         for i in range(len(probability)):
             p = probability[i]
             c = count[i]
-            if combination(scale,c)*(p**c)*((1-p)**(scale-c)) > 0.5:
+            if combination(scale, c) * (p ** c) * ((1 - p) ** (scale - c)) > 0.5:
                 color.append(0.02)
             else:
-                color.append(combination(scale,c)*(p**c)*((1-p)**(scale-c)))
+                color.append(combination(scale, c) * (p ** c) * ((1 - p) ** (scale - c)))
     return color
 
 
-def norm_color(lst): # 根据cmap需要生成0-1的数据
+def norm_color(lst):  # 根据cmap需要生成0-1的数据
     maxi = max(lst)
     mini = min(lst)
-    multi = 1/(maxi-mini)
-    return [(1-n*multi) for n in lst]
+    multi = 1 / (maxi - mini)
+    return [(1 - n * multi) for n in lst]
 
 
 def accumulate(pro_list):
@@ -998,6 +1088,7 @@ def accumulate(pro_list):
                 line *= 1 - pro_list[j]
         ac += line
     return ac
+
 
 # plt.scatter(x = list(range(48457)),y = dig_1_cm, c = plt.get_cmap('Reds')(norm_color(dig_1_cm)))
 
@@ -1025,7 +1116,7 @@ def accumulate(pro_list):
 # tbb_std = standard_mut_block_5(genome, 300000, standard, comb)
 # res = predict_var(tbb_std, tbb_mut)
 
-#获得预测的图片
+# 获得预测的图片
 # cla_1_seq = get_seq('cla-1','gene_range',genome)
 # cla_1_pro = analyze(cla_1_seq,tbb_standard)
 # cla_1_count = get_gene('cla-1',tbb_co,'gene_range')
@@ -1087,15 +1178,16 @@ def centri(count9):
 
 
 def norm_count9(count9):
-    for k,v in count9.items():
+    for k, v in count9.items():
         total = v['0'][k]
-        for a,b in v.items():
-            for m,n in b.items():
-                count9[k][a][m] = n/total
+        for a, b in v.items():
+            for m, n in b.items():
+                count9[k][a][m] = n / total
     return count9
 
+
 def barh_dict(dict):
-    key = ['A','T','C','G']  #前处理，让中间那一列添加别的碱基为0
+    key = ['A', 'T', 'C', 'G']  # 前处理，让中间那一列添加别的碱基为0
     for i in key:
         if i not in dict['0'].keys():
             dict['0'][i] = 0
@@ -1110,24 +1202,22 @@ def barh_dict(dict):
         c.append(v['C'])
         g.append(v['G'])
     labels = list(dict.keys())
-    plt.bar(labels,a,label = 'A')
-    plt.bar(labels,t,bottom=a,label = 'T')
-    plt.bar(labels,c,bottom=np.asarray(a)+np.asarray(t),label = 'C')
-    plt.bar(labels,g,bottom=np.asarray(a)+np.asarray(t)+np.asarray(c),label = 'G')
-    plt.legend(loc = 'upper right')
+    plt.bar(labels, a, label='A')
+    plt.bar(labels, t, bottom=a, label='T')
+    plt.bar(labels, c, bottom=np.asarray(a) + np.asarray(t), label='C')
+    plt.bar(labels, g, bottom=np.asarray(a) + np.asarray(t) + np.asarray(c), label='G')
+    plt.legend(loc='upper right')
     plt.show()
 
 
-
-
-def standard_rate_9(co, genome,scale):
+def standard_rate_9(co, genome, scale):
     chrom = co['chrom'].to_list()  # 计数有多少个triple被突变了
     pos = co['pos'].to_list()
     res = []
     for i in range(len(chrom)):
         c = genome[chrom[i]]
         p = pos[i]
-        code = ''.join([c[p-5],c[p-4],c[p - 3], c[p - 2], c[p - 1], c[p], c[p + 1],c[p+2],c[p+3]])
+        code = ''.join([c[p - 5], c[p - 4], c[p - 3], c[p - 2], c[p - 1], c[p], c[p + 1], c[p + 2], c[p + 3]])
         res.append(code)
     count = dict(Counter(res))
     all = []
@@ -1137,16 +1227,19 @@ def standard_rate_9(co, genome,scale):
     re = {}
     for k in count.keys():
         val = count[k] / count_all[k]
-        re[k] = val/scale
-    return re,count,count_all
+        re[k] = val / scale
+    return re, count, count_all
+
+
 def slide_9(seq):
     record = []
     for i in range(len(seq) - 8):
-        record.append(''.join([seq[i], seq[i + 1], seq[i + 2],seq[i+3],seq[i+4],seq[i+5],seq[i+6],seq[i+7],seq[i+8]]))
+        record.append(''.join(
+            [seq[i], seq[i + 1], seq[i + 2], seq[i + 3], seq[i + 4], seq[i + 5], seq[i + 6], seq[i + 7], seq[i + 8]]))
     return record
 
 
-def predict_gap(range_path,co,genome,model,scale): #看每个基因预测值与实际值的差距
+def predict_gap(range_path, co, genome, model, scale):  # 看每个基因预测值与实际值的差距
     gene = list(set(co['gene'].to_list()))
     res = {}
     for i in gene:
@@ -1154,20 +1247,21 @@ def predict_gap(range_path,co,genome,model,scale): #看每个基因预测值与�
         seq = get_seq(i, range_path, genome)
         if seq:
             pro = analyze(seq, model)
-            count = get_gene(i,co,range_path)
-            predict = sum(pro)*scale
+            count = get_gene(i, co, range_path)
+            predict = sum(pro) * scale
             c = sum(count)
             if c > 4:
-                print((predict-c)/c)
-                res[i] = (c-predict)/predict
+                print((predict - c) / c)
+                res[i] = (c - predict) / predict
                 print(i + ' done')
     return res
 
 
-def get_polII(polII_path,genome):  #读取polII均值文件
+def get_polII(polII_path, genome):  # 读取polII均值文件
     with open(polII_path, 'r') as f:
         m = f.readlines()
-        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']), 'IV': [0] * len(genome['IV']),
+        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']),
+               'IV': [0] * len(genome['IV']),
                'V': [0] * len(genome['V']), 'X': [0] * len(genome['X'])}
         for i in m:
             if i[0] != 't' and i[0] != '#' and i[0] != 'M':
@@ -1179,13 +1273,13 @@ def get_polII(polII_path,genome):  #读取polII均值文件
     return res
 
 
-
-def get_wig(wig_path,genome,step):
+def get_wig(wig_path, genome, step):
     error = []
     with open(wig_path, 'r') as f:
         m = f.readlines()
-        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']), 'IV': [0] * len(genome['IV']),
-               'V': [0] * len(genome['V']), 'X': [0] * len(genome['X']),'MtDNA':[0]*len(genome['MtDNA'])}
+        res = {'I': [0] * len(genome['I']), 'II': [0] * len(genome['II']), 'III': [0] * len(genome['III']),
+               'IV': [0] * len(genome['IV']),
+               'V': [0] * len(genome['V']), 'X': [0] * len(genome['X']), 'MtDNA': [0] * len(genome['MtDNA'])}
         for i in m:
             if i[0] != 't' and i[0] != '#' and i[0] != 'M':
                 if i[0] == 'v':
@@ -1195,9 +1289,9 @@ def get_wig(wig_path,genome,step):
                         key = 'MtDNA'
                 else:
                     n = i.split('\n')[0].split('\t')
-                    start = int(n[0])-1
+                    start = int(n[0]) - 1
                     try:
-                        for k in range(start,start+step):
+                        for k in range(start, start + step):
                             res[key][k] = n[1]
                     except:
                         error.append(key)
@@ -1207,30 +1301,31 @@ def get_wig(wig_path,genome,step):
     return res
 
 
-
-def heatmap_pol(polII_path,wig_path,genome,length):
+def heatmap_pol(polII_path, wig_path, genome, length):
     if polII_path:
-        res = get_polII(polII_path,genome)
+        res = get_polII(polII_path, genome)
     if wig_path:
-        res = get_wig(wig_path,genome,step=10)
+        res = get_wig(wig_path, genome, step=10)
     map = {}
     for k in res.keys():
         if k not in map.keys():
             map[k] = []
         while len(res[k]) < 21000000:
             res[k].append(0)
-        for i in range(0,len(res[k]),length):
+        for i in range(0, len(res[k]), length):
             start = i
-            end = i+length
-            map[k].append(sum(res[k][start:end])/length)
+            end = i + length
+            map[k].append(sum(res[k][start:end]) / length)
     heat_map_dict(map)
     return map
 
-def sum_lst(lst,scale):
+
+def sum_lst(lst, scale):
     nlst = []
-    for i in range(0,len(lst),scale):
-        nlst.append(sum(lst[i:i+scale]))
+    for i in range(0, len(lst), scale):
+        nlst.append(sum(lst[i:i + scale]))
     return nlst
+
 
 def chrom_spliter(pred):
     res = {}
@@ -1241,3 +1336,53 @@ def chrom_spliter(pred):
     res['V'] = pred[61629485:82553665]
     res['X'] = pred[82553665:]
     return res
+
+
+def reverse(string):
+    j = ''
+    dic = {"A": "T", "T": "A", "G": "C", "C": "G"}
+    for i in string:
+        j += dic[i]
+    return j[::-1]
+
+
+def cds_extractor(data, genome):
+    chr = data[1]
+    marker = data[2]
+    range_data = data[3]
+    start = data[4]
+    end = data[5]
+    range_data[-1] = (range_data[-1][0],range_data[-1][1]+3)
+    if marker == '+':
+        seq = ''
+        range_data = [(n[0] + start-1, n[1] + n[0] + start-1) for n in range_data]
+        # print(range_data)
+        for i in range_data:
+            seq += genome[chr][i[0]:i[1]]
+    else:
+        seq = ''
+        range_data = [(end - n[0]- n[1], end - n[0]) for n in range_data]
+        for i in range_data:
+            # seq += reverse(genome[chr][i[0]:i[1]])
+            seq += genome[chr][i[0]:i[1]][::-1]
+    return seq
+plt.figure(figsize=(20,20))
+plt.subplot(6,1,1)
+plt.scatter(list(range(len(chrom['I']))),chrom['I'],s=4)
+plt.ylabel('I')
+plt.subplot(6,1,2)
+plt.scatter(list(range(len(chrom['II']))),chrom['II'],s=4)
+plt.ylabel('II')
+plt.subplot(6,1,3)
+plt.scatter(list(range(len(chrom['III']))),chrom['III'],s=4)
+plt.ylabel('III')
+plt.subplot(6,1,4)
+plt.scatter(list(range(len(chrom['IV']))),chrom['IV'],s=4)
+plt.ylabel('IV')
+plt.subplot(6,1,5)
+plt.scatter(list(range(len(chrom['V']))),chrom['V'],s=4)
+plt.ylabel('V')
+plt.subplot(6,1,6)
+plt.scatter(list(range(len(chrom['X']))),chrom['X'],s=4)
+plt.ylabel('X')
+plt.savefig(r"C:\Users\guozh\Desktop\test.jpg")
